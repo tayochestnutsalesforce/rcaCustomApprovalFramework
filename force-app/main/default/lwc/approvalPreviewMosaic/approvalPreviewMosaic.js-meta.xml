@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Approval Preview Mosaic</masterLabel>
+    <description>Displays approval chains for a Quote using Live_Approval__c and RCA_Approval_Rule__c data.</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Quote</object>
+            </objects>
+            <property name="statusColorMap" type="String" label="Status→Color map" description="JSON or semicolon-delimited mapping of Status to color (e.g. Approved=#2ecc71;N/A=#999999)" />
+            <property name="approvedColor" type="String" label="Approved Color" description="Color for Approved status (hex or CSS color)" />
+            <property name="rejectedColor" type="String" label="Rejected Color" description="Color for Rejected status (hex or CSS color)" />
+            <property name="pendingColor" type="String" label="Pending Color" description="Color for Pending status (hex or CSS color)" />
+            <property name="naColor" type="String" label="N/A Color" description="Color for N/A status (hex or CSS color)" />
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Quote Id" />
+            <property name="statusColorMap" type="String" label="Status→Color map" description="JSON or semicolon-delimited mapping of Status to color (e.g. Approved=#2ecc71;N/A=#999999)" />
+            <property name="approvedColor" type="String" label="Approved Color" description="Color for Approved status (hex or CSS color)" />
+            <property name="rejectedColor" type="String" label="Rejected Color" description="Color for Rejected status (hex or CSS color)" />
+            <property name="pendingColor" type="String" label="Pending Color" description="Color for Pending status (hex or CSS color)" />
+            <property name="naColor" type="String" label="N/A Color" description="Color for N/A status (hex or CSS color)" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

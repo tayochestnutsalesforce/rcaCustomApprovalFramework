@@ -1,0 +1,69 @@
+.grid {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+}
+.column {
+    min-width: 220px;
+    border-left: 4px solid transparent;
+}
+.chain-header {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.card {
+    background: #fff;
+    border: 1px solid #d8dde6;
+    border-radius: 6px;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+.level-block { margin-bottom: 0.75rem; }
+.level-divider {
+    border-top: 2px solid #ccd6e8;
+    margin: 0.5rem 0 0.75rem 0;
+    padding-top: 0.5rem;
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+}
+.level-label {
+    background: linear-gradient(90deg,#eef2ff,#e6f0ff);
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #0f172a;
+}
+
+.level-spacer { height: 28px; display:flex; align-items:center; }
+.muted { color: #9aa9bf; font-weight:600 }
+.approver {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.placeholder { background: #fbfbfd; border: 1px dashed #e6eef7; color:#9aa9bf }
+.placeholder-text { color: #9aa9bf; font-style: italic }
+.placeholder-sub { color: #c0cbd7 }
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.approver-name { font-weight: 600; }
+.approver-title { font-size: 0.85rem; color: #4b5563; }
+.approver-notes { font-size: 0.8rem; color: #6b7280; }
+.loading { font-style: italic; }
+.error { color: red; }
+
+.view-toggle { display:flex; gap:0.5rem; margin-bottom:0.75rem }
+.toggle-button { background:#f3f4f6; border:1px solid #d1d5db; padding:0.35rem 0.6rem; border-radius:6px; cursor:pointer }
+.toggle-button[aria-pressed="true"] { background:#111827; color:#fff; border-color:#111827 }
+
+.approval-table-wrap { overflow:auto; }
+.approval-table { width:100%; border-collapse: collapse; background: #fff; }
+.approval-table th, .approval-table td { text-align:left; padding:0.5rem 0.75rem; border-bottom:1px solid #e6eef7 }
+.approval-table th { background:#f8fafc; font-weight:700; }
+.placeholder-row td { color:#9aa9bf; font-style:italic }

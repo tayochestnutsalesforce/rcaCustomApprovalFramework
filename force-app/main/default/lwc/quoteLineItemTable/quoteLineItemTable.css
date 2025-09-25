@@ -1,0 +1,21 @@
+.table-header {
+    font-weight: bold;
+    background-color: #f3f3f3;
+}
+
+.table-cell {
+    padding: 0.5rem;
+}
+
+.slds-table th,
+.slds-table td {
+    vertical-align: middle;
+}
+
+.slds-table thead th {
+    font-weight: bold;
+}
+
+.slds-card__header-title {
+    font-weight: bold;
+}

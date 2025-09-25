@@ -1,0 +1,212 @@
+.container {
+    padding: 0.75rem;
+}
+.loading {
+    color: #666;
+    font-style: italic;
+}
+.apv-container {
+    padding: 0.75rem;
+}
+
+.gridHeader {
+    display: grid;
+    grid-template-columns: 120px repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.leftHeaderSpacer {
+    height: 1px;
+}
+
+.chainHeader {
+    text-align: center;
+    font-weight: 600;
+    color: #16325c;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e6ef;
+}
+.card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid #e6e9ee;
+    border-radius: 6px;
+    margin-bottom: 0.6rem;
+    background: #fff;
+}
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.content {
+    flex: 1 1 auto;
+}
+.title {
+    font-weight: 600;
+}
+.subtitle {
+    color: #6b6f76;
+    font-size: 0.9rem;
+}
+.meta {
+    color: #9aa0a6;
+    font-size: 0.8rem;
+}
+.error {
+    color: #a94442;
+}
+
+.levelDivider {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding-left: 8px;
+    border-left: 4px dashed #d8dde6;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+.statusIndicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 0.4rem;
+    vertical-align: middle;
+    background: #cccccc; /* default */
+}
+
+.gridBody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.gridRow {
+    display: grid;
+    grid-template-columns: 120px repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+.leftColumn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+}
+
+.levelLabel {
+    background: #fff;
+    padding: 2px 6px;
+    position: relative;
+    left: -6px;
+}
+
+.chainCell {
+    min-height: 56px;
+}
+
+.card.stacked {
+    margin-bottom: 8px;
+}
+
+.chainCell {
+    /* keep a slightly larger min height when stacking occurs */
+    min-height: 64px;
+}
+
+.card.empty {
+    background: transparent;
+    border: 1px dashed transparent;
+    height: 48px;
+}
+
+.card {
+    transition: box-shadow 0.12s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(16,24,40,0.04);
+}
+
+/* Tooltip Styles */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #16325c;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    min-width: 200px;
+    max-width: 350px;
+    white-space: normal;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tooltip.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #16325c;
+}
+
+.tooltip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tooltip-item {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 6px;
+}
+
+.tooltip-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.tooltip-question {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #e8f4fd;
+}
+
+.tooltip-answer {
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.no-answers {
+    font-style: italic;
+    color: #a8b5c8;
+}

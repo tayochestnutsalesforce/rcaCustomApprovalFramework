@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_Id__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Quote</label>
+    <referenceTo>Quote</referenceTo>
+    <relationshipLabel>Approval Answers</relationshipLabel>
+    <relationshipName>Approval_Answers</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

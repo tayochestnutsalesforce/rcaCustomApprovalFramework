@@ -1,0 +1,131 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-23-2025
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<!-- updated: 2025-09-23 - removed computed template expressions -->
+<template>
+    <div class="container">
+        <template if:true={loading}>
+            <div class="loading">Loading approval preview…</div>
+        </template>
+
+        <template if:true={error}>
+            <div class="error">{error}</div>
+        </template>
+
+        <template if:false={loading}>
+            <div class="columns">
+                <template for:each={items} for:item="chain">
+                    <div key={chain.name} class="column">
+                        <div class="chainHeader">{chain.name}</div>
+                        <template for:each={chain.items} for:item="slot">
+                            <template if:true={slot._isDivider}>
+                                <div key={slot._key} class="levelDivider">Level {slot.Level}</div>
+                            </template>
+                            <template if:false={slot._isDivider}>
+                                <div key={slot._key} class="card tooltip-container" data-status-color={slot._statusColor}>
+                                    <!--<img class="avatar" src={slot._avatar} onerror={imgError} alt="avatar" />-->
+                                    <div class="content">
+                                        <div class="title">{slot.Title}</div>
+                                        <div class="subtitle">{slot.ApproverName}</div>
+                                            <div class="meta">Slot {slot.ApprovalRuleSlot} — <span class="statusIndicator" data-status-color={slot._statusColor}></span>{slot.Status}</div>
+                                    </div>
+                                    
+                                    <!-- Tooltip for approval answers -->
+                                    <template if:true={slot._approvalAnswers}>
+                                        <template if:true={slot._approvalAnswers.length}>
+                                            <div class="tooltip" data-tooltip-id={slot._key}>
+                                                <div class="tooltip-content">
+                                                    <template for:each={slot._approvalAnswers} for:item="answer">
+                                                        <div key={answer.Id} class="tooltip-item">
+                                                            <div class="tooltip-question">{answer.questionText}</div>
+                                                            <div class="tooltip-answer">{answer.answer}</div>
+                                                        </div>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template if:false={slot._approvalAnswers.length}>
+                                            <div class="tooltip" data-tooltip-id={slot._key}>
+                                                <div class="tooltip-content">
+                                                    <div class="no-answers">No approval answers available</div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <div class="apv-container">
+                <template if:true={matrixRows.length}>
+                    <div class="gridHeader">
+                        <div class="leftHeaderSpacer"></div>
+                        <template for:each={chainsList} for:item="chain">
+                            <div key={chain.key} class="chainHeader">{chain.name}</div>
+                        </template>
+                    </div>
+
+                    <div class="gridBody">
+                        <template for:each={matrixRows} for:item="row">
+                            <div class="gridRow" key={row.level}>
+                                <div class="leftColumn">
+                                    <div class="levelDivider"><span class="levelLabel">Level {row.level}</span></div>
+                                </div>
+
+                                <template for:each={row.cells} for:item="cell">
+                                    <div key={cell.chainKey} class="chainCell">
+                                        <template if:true={cell.hasItem}>
+                                            <!-- render stacked items for this cell -->
+                                            <template for:each={cell.items} for:item="it">
+                                                <div key={it._key} class="card stacked tooltip-container" data-status-color={it.statusColor}>
+                                                    <img class="avatar" src={it.avatar} onerror={imgError} alt="avatar" />
+                                                    <div class="content">
+                                                        <div class="title">{it.title}</div>
+                                                        <div class="subtitle">{it.approverName}</div>
+                                                        <div class="meta">Slot {it.slot} — <span class="statusIndicator" data-status-color={it.statusColor}></span>{it.status}</div>
+                                                    </div>
+                                                    
+                                                    <!-- Tooltip for approval answers -->
+                                                    <template if:true={it.approvalAnswers}>
+                                                        <template if:true={it.approvalAnswers.length}>
+                                                            <div class="tooltip" data-tooltip-id={it._key}>
+                                                                <div class="tooltip-content">
+                                                                    <template for:each={it.approvalAnswers} for:item="answer">
+                                                                        <div key={answer.Id} class="tooltip-item">
+                                                                            <div class="tooltip-question">{answer.questionText}</div>
+                                                                            <div class="tooltip-answer">{answer.answer}</div>
+                                                                        </div>
+                                                                    </template>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <template if:false={it.approvalAnswers.length}>
+                                                            <div class="tooltip" data-tooltip-id={it._key}>
+                                                                <div class="tooltip-content">
+                                                                    <div class="no-answers">No approval answers available</div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template if:false={cell.hasItem}>
+                                            <div class="card empty"></div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

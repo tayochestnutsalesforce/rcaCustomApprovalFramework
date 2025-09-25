@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approval_Rule__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Approval Rule</label>
+    <referenceTo>RCA_Approval_Rule__c</referenceTo>
+    <relationshipLabel>Approval Questions</relationshipLabel>
+    <relationshipName>Approval_Questions</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

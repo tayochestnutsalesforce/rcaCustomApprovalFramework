@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="field1" type="String" label="Field 1" description="First field to display in the table"/>
+            <property name="field2" type="String" label="Field 2" description="Second field to display in the table"/>
+            <property name="field3" type="String" label="Field 3" description="Third field to display in the table"/>
+            <property name="field4" type="String" label="Field 4" description="Fourth field to display in the table"/>
+            <property name="field5" type="String" label="Field 5" description="Fifth field to display in the table"/>
+            <property name="familyFilter" type="String" label="Family Filter" description="Filter value for the Family field on QuoteLineItem"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

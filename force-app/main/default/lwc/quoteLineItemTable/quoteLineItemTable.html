@@ -1,0 +1,87 @@
+<template>
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small">{tableTitle}</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        
+        <div class="slds-card__body slds-card__body_inner">
+            <!-- Loading Spinner -->
+            <template lwc:if={isLoading}>
+                <div class="slds-text-align_center slds-m-vertical_medium">
+                    <lightning-spinner alternative-text="Loading quote line items..."></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error Message -->
+            <template lwc:if={error}>
+                <div class="slds-notify slds-notify_alert slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>Error loading quote line items: {error.body.message}</h2>
+                </div>
+            </template>
+
+            <!-- Data Table -->
+            <template lwc:if={hasData}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <template for:each={tableHeaders} for:item="header">
+                                <th key={header.fieldName} class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={header.label}>
+                                        {header.label}
+                                    </div>
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={quoteLineItems} for:item="item">
+                            <tr key={item.Id} class="slds-hint-parent">
+                                <template for:each={tableHeaders} for:item="header">
+                                    <td key={header.fieldName} class="table-cell">
+                                        <div class="slds-truncate" title={item[header.fieldName]}>
+                                            {item[header.fieldName]}
+                                        </div>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+
+            <!-- No Data Message -->
+            <template lwc:if={configuredFields}>
+                <template lwc:elseif={hasData}>
+                    <!-- Data is shown above -->
+                </template>
+                <template lwc:else>
+                    <template lwc:if={isLoading}>
+                        <!-- Loading is shown above -->
+                    </template>
+                    <template lwc:elseif={error}>
+                        <!-- Error is shown above -->
+                    </template>
+                    <template lwc:else>
+                        <div class="slds-text-align_center slds-m-vertical_medium">
+                            <p class="slds-text-body_regular">No quote line items found.</p>
+                        </div>
+                    </template>
+                </template>
+            </template>
+
+            <!-- Configuration Message -->
+            <template lwc:else>
+                <div class="slds-text-align_center slds-m-vertical_medium">
+                    <p class="slds-text-body_regular">Please configure at least one field to display in the component properties.</p>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

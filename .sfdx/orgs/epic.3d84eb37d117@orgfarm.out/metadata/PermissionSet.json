@@ -1,0 +1,122 @@
+{
+  "status": 0,
+  "result": [
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-05-21T17:36:50.000Z",
+      "fileName": "permissionsets/Custom_Community_Plus_Perm_Set.permissionset",
+      "fullName": "Custom_Community_Plus_Perm_Set",
+      "id": "0PSSB00000MGgFd4AL",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-05-21T17:36:50.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkQblYAF",
+      "createdByName": "Pooled Org Admin",
+      "createdDate": "2025-05-21T17:36:50.000Z",
+      "fileName": "permissionsets/Custom_Sales_Rep_Perm_Set.permissionset",
+      "fullName": "Custom_Sales_Rep_Perm_Set",
+      "id": "0PSSB00000MGjz64AD",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-05-21T17:36:50.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkQblYAF",
+      "createdByName": "Pooled Org Admin",
+      "createdDate": "2025-05-21T17:36:50.000Z",
+      "fileName": "permissionsets/Custom_Sales_Ops_Rep_Perm_Set.permissionset",
+      "fullName": "Custom_Sales_Ops_Rep_Perm_Set",
+      "id": "0PSSB00000MGjz84AD",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-05-21T17:36:50.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-06-10T01:44:38.000Z",
+      "fileName": "permissionsets/TwinField_Permissions.permissionset",
+      "fullName": "TwinField_Permissions",
+      "id": "0PSSB00000MvQh44AF",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-06-10T01:45:03.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-08-14T11:50:03.000Z",
+      "fileName": "permissionsets/Context_Perms.permissionset",
+      "fullName": "Context_Perms",
+      "id": "0PSSB00000PZmL74AL",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-08-14T11:52:23.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-09-25T14:10:27.000Z",
+      "fileName": "permissionsets/RCA_Live_Approval_Permissions.permissionset",
+      "fullName": "RCA_Live_Approval_Permissions",
+      "id": "0PSSB00000RDfIk4AL",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-09-25T14:12:46.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-06-03T20:17:29.000Z",
+      "fileName": "permissionsets/Core_Approval_Permission_Set.permissionset",
+      "fullName": "Core_Approval_Permission_Set",
+      "id": "0PSSB00000MjhCD4AZ",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-06-03T20:18:10.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-06-20T23:10:34.000Z",
+      "fileName": "permissionsets/AdvancedConfiguratorDesignerCustom.permissionset",
+      "fullName": "AdvancedConfiguratorDesignerCustom",
+      "id": "0PSSB00000NN7DF4A1",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-06-20T23:11:11.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    },
+    {
+      "createdById": "005SB00000NkQblYAF",
+      "createdByName": "Pooled Org Admin",
+      "createdDate": "2025-05-21T17:36:50.000Z",
+      "fileName": "permissionsets/Custom_Partner_Community_User_Perm_Set.permissionset",
+      "fullName": "Custom_Partner_Community_User_Perm_Set",
+      "id": "0PSSB00000MGjzB4AT",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-05-21T17:36:50.000Z",
+      "manageableState": "unmanaged",
+      "type": "PermissionSet"
+    }
+  ]
+}

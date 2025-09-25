@@ -1,0 +1,83 @@
+<template>
+    <lightning-card title="Approval Preview">
+        <div class="slds-p-around_small">
+            <div class="view-toggle">
+                <button class="toggle-button" data-view="grid" onclick={handleToggle}>Grid</button>
+                <button class="toggle-button" data-view="table" onclick={handleToggle}>Table</button>
+            </div>
+            <template if:true={chainsList.length}>
+                <template if:true={isGrid}>
+                    <div class="grid">
+                    <template for:each={chainsList} for:item="chain">
+                        <div key={chain.key} class="column">
+                            <div class="chain-header">{chain.key}</div>
+                            <template for:each={chain.levels} for:item="levelBlock">
+                                <div key={levelBlock.level} class="level-block">
+                                    <template if:true={levelBlock.divider}>
+                                        <div class="level-divider">
+                                            <span class="level-label">Step {levelBlock.level}</span>
+                                        </div>
+                                    </template>
+                                    <template if:false={levelBlock.divider}>
+                                        <div class="level-spacer">
+                                            <span class="level-label muted">Step {levelBlock.level}</span>
+                                        </div>
+                                    </template>
+                                    <template if:true={levelBlock.rowsCount}>
+                                        <template for:each={levelBlock.rows} for:item="row">
+                                            <template if:true={row._placeholder}>
+                                                <div key={row.key} class="card placeholder">
+                                                    <div class="approver">
+                                                        <div class="approver-info">
+                                                            <div class="approver-name placeholder-text">—</div>
+                                                            <div class="approver-title placeholder-sub">&nbsp;</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template if:false={row._placeholder}>
+                                                <div key={row.key} class="card">
+                                                    <div class="approver">
+                                                        <img if:true={row.AvatarUrl} src={row.AvatarUrl} alt="avatar" class="avatar"/>
+                                                        <div class="approver-info">
+                                                            <div class="approver-name">{row.ApproverName}</div>
+                                                            <div class="approver-title">{row.Title}</div>
+                                                            <div class="approver-notes">{row.Notes}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </template>
+                                    </template>
+                                    <template if:false={levelBlock.rowsCount}>
+                                        <div class="card placeholder">
+                                            <div class="approver">
+                                                <div class="approver-info">
+                                                    <div class="approver-name placeholder-text">No approver</div>
+                                                    <div class="approver-title placeholder-sub">—</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+                </template>
+
+                <template if:true={isTable}>
+                    <div class="approval-table-wrap">
+                        <lightning-datatable data={tableRows} columns={columns} key-field="key"></lightning-datatable>
+                    </div>
+                </template>
+            </template>
+            <template if:true={loading}>
+                <div class="loading">Loading…</div>
+            </template>
+            <template if:true={error}>
+                <div class="error">{error}</div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

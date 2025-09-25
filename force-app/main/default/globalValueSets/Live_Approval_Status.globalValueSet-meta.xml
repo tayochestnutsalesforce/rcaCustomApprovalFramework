@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>N/A</fullName>
+        <default>true</default>
+        <label>N/A</label>
+    </customValue>
+    <customValue>
+        <fullName>Approve</fullName>
+        <default>false</default>
+        <label>Approve</label>
+    </customValue>
+    <customValue>
+        <fullName>Reject</fullName>
+        <default>false</default>
+        <label>Reject</label>
+    </customValue>
+    <customValue>
+        <fullName>Triggered</fullName>
+        <default>false</default>
+        <label>Triggered</label>
+    </customValue>
+    <customValue>
+        <fullName>Not Triggered</fullName>
+        <default>false</default>
+        <label>Not Triggered</label>
+    </customValue>
+    <customValue>
+        <fullName>Pending</fullName>
+        <default>false</default>
+        <label>Pending</label>
+    </customValue>
+    <masterLabel>Live Approval Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
