@@ -1,0 +1,42 @@
+<!--
+  @description       : Simple title display component
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-26-2025
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card>
+        <div class="slds-p-horizontal_medium">
+            <!-- Display the title -->
+            <template if:true={hasTitle}>
+                <div class="slds-p-vertical_medium">
+                    <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <span class="slds-text-heading_medium title-display">{title}</span>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                </div>
+            </template>
+
+            <!-- No title provided state -->
+            <template if:false={hasTitle}>
+                <div class="slds-p-vertical_medium">
+                    <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                        <span class="slds-assistive-text">Warning</span>
+                        <h2 class="slds-text-heading_small">
+                            No title provided
+                        </h2>
+                        <p class="slds-text-body_regular slds-p-top_x-small">
+                            Please configure the title property for this component.
+                        </p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

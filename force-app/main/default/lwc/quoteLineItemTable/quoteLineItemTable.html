@@ -1,10 +1,17 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 09-26-2025
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <div class="slds-card">
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__body">
                     <h2 class="slds-card__header-title">
-                        <span class="slds-text-heading_small">{tableTitle}</span>
+                        <span class="slds-text-heading_small">{familyFilter}</span>
                     </h2>
                 </div>
             </header>
@@ -45,36 +52,191 @@
                             <tr key={item.Id} class="slds-hint-parent">
                                 <template lwc:if={field1}>
                                     <td class="table-cell">
-                                        <div class="slds-truncate" title={item.field0}>
-                                            {item.field0}
+                                        <div class="slds-truncate">
+                                            <template lwc:if={field1IsCurrency}>
+                                                <lightning-formatted-number 
+                                                    value={item.field0} 
+                                                    format-style="currency"
+                                                    currency-code="USD"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field1IsPercent}>
+                                                <lightning-formatted-number 
+                                                    value={item.field0} 
+                                                    format-style="percent"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field1IsNumber}>
+                                                <lightning-formatted-number 
+                                                    value={item.field0}
+                                                    minimum-fraction-digits="0">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field1IsDate}>
+                                                <lightning-formatted-date-time 
+                                                    value={item.field0}
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-text value={item.field0}></lightning-formatted-text>
+                                            </template>
                                         </div>
                                     </td>
                                 </template>
                                 <template lwc:if={field2}>
                                     <td class="table-cell">
-                                        <div class="slds-truncate" title={item.field1}>
-                                            {item.field1}
+                                        <div class="slds-truncate">
+                                            <template lwc:if={field2IsCurrency}>
+                                                <lightning-formatted-number 
+                                                    value={item.field1} 
+                                                    format-style="currency"
+                                                    currency-code="USD"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field2IsPercent}>
+                                                <lightning-formatted-number 
+                                                    value={item.field1} 
+                                                    format-style="percent"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field2IsNumber}>
+                                                <lightning-formatted-number 
+                                                    value={item.field1}
+                                                    minimum-fraction-digits="0">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field2IsDate}>
+                                                <lightning-formatted-date-time 
+                                                    value={item.field1}
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-text value={item.field1}></lightning-formatted-text>
+                                            </template>
                                         </div>
                                     </td>
                                 </template>
                                 <template lwc:if={field3}>
                                     <td class="table-cell">
-                                        <div class="slds-truncate" title={item.field2}>
-                                            {item.field2}
+                                        <div class="slds-truncate">
+                                            <template lwc:if={field3IsCurrency}>
+                                                <lightning-formatted-number 
+                                                    value={item.field2} 
+                                                    format-style="currency"
+                                                    currency-code="USD"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field3IsPercent}>
+                                                <lightning-formatted-number 
+                                                    value={item.field2} 
+                                                    format-style="percent"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field3IsNumber}>
+                                                <lightning-formatted-number 
+                                                    value={item.field2}
+                                                    minimum-fraction-digits="0">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field3IsDate}>
+                                                <lightning-formatted-date-time 
+                                                    value={item.field2}
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-text value={item.field2}></lightning-formatted-text>
+                                            </template>
                                         </div>
                                     </td>
                                 </template>
                                 <template lwc:if={field4}>
                                     <td class="table-cell">
-                                        <div class="slds-truncate" title={item.field3}>
-                                            {item.field3}
+                                        <div class="slds-truncate">
+                                            <template lwc:if={field4IsCurrency}>
+                                                <lightning-formatted-number 
+                                                    value={item.field3} 
+                                                    format-style="currency"
+                                                    currency-code="USD"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field4IsPercent}>
+                                                <lightning-formatted-number 
+                                                    value={item.field3} 
+                                                    format-style="percent"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field4IsNumber}>
+                                                <lightning-formatted-number 
+                                                    value={item.field3}
+                                                    minimum-fraction-digits="0">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field4IsDate}>
+                                                <lightning-formatted-date-time 
+                                                    value={item.field3}
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-text value={item.field3}></lightning-formatted-text>
+                                            </template>
                                         </div>
                                     </td>
                                 </template>
                                 <template lwc:if={field5}>
                                     <td class="table-cell">
-                                        <div class="slds-truncate" title={item.field4}>
-                                            {item.field4}
+                                        <div class="slds-truncate">
+                                            <template lwc:if={field5IsCurrency}>
+                                                <lightning-formatted-number 
+                                                    value={item.field4} 
+                                                    format-style="currency"
+                                                    currency-code="USD"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field5IsPercent}>
+                                                <lightning-formatted-number 
+                                                    value={item.field4} 
+                                                    format-style="percent"
+                                                    minimum-fraction-digits="2">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field5IsNumber}>
+                                                <lightning-formatted-number 
+                                                    value={item.field4}
+                                                    minimum-fraction-digits="0">
+                                                </lightning-formatted-number>
+                                            </template>
+                                            <template lwc:elseif={field5IsDate}>
+                                                <lightning-formatted-date-time 
+                                                    value={item.field4}
+                                                    year="numeric" 
+                                                    month="short" 
+                                                    day="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </template>
+                                            <template lwc:else>
+                                                <lightning-formatted-text value={item.field4}></lightning-formatted-text>
+                                            </template>
                                         </div>
                                     </td>
                                 </template>

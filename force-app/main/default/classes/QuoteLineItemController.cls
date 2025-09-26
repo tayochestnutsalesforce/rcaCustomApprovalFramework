@@ -2,20 +2,27 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 09-25-2025
+ * @last modified on  : 09-26-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class QuoteLineItemController {
     
     @AuraEnabled(cacheable=true)
     public static List<QuoteLineItem> getQuoteLineItems(Id recordId, List<String> fields, String familyFilter) {
+        System.debug('QuoteLineItemController.getQuoteLineItems called with:');
+        System.debug('recordId: ' + recordId);
+        System.debug('fields: ' + fields);
+        System.debug('familyFilter: ' + familyFilter);
+        
         try {
             // Validate inputs
             if (String.isBlank(recordId)) {
+                System.debug('Error: Record ID is blank');
                 throw new AuraHandledException('Record ID is required');
             }
             
             if (fields == null || fields.isEmpty()) {
+                System.debug('Error: Fields list is null or empty');
                 throw new AuraHandledException('At least one field must be specified');
             }
             
@@ -37,7 +44,7 @@ public with sharing class QuoteLineItemController {
             cleanFields.add('QuoteId');
             
             // Build the dynamic SOQL query
-            String soqlQuery = 'SELECT Product2.Name, ' + String.join(new List<String>(cleanFields), ', ') + 
+            String soqlQuery = 'SELECT ' + String.join(new List<String>(cleanFields), ', ') + 
                               ' FROM QuoteLineItem WHERE QuoteId = :recordId';
             
             // Add family filter if provided

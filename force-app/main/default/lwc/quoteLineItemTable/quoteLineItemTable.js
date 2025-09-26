@@ -87,25 +87,43 @@ export default class QuoteLineItemTable extends LightningElement {
             field2Type: typeof this.field2,
             field3Type: typeof this.field3,
             field4Type: typeof this.field4,
-            field5Type: typeof this.field5
+            field5Type: typeof this.field5,
+            field1Length: this.field1?.length,
+            field2Length: this.field2?.length,
+            field1Value: JSON.stringify(this.field1),
+            field2Value: JSON.stringify(this.field2)
         });
         
         const fields = [];
-        if (this.field1 && this.field1.trim()) fields.push(this.field1.trim());
-        if (this.field2 && this.field2.trim()) fields.push(this.field2.trim());
-        if (this.field3 && this.field3.trim()) fields.push(this.field3.trim());
-        if (this.field4 && this.field4.trim()) fields.push(this.field4.trim());
-        if (this.field5 && this.field5.trim()) fields.push(this.field5.trim());
+        if (this.field1 && String(this.field1).trim()) {
+            console.log('XXXXAdding field1:', this.field1);
+            fields.push(String(this.field1).trim());
+        }
+        if (this.field2 && String(this.field2).trim()) {
+            console.log('XXXXAdding field2:', this.field2);
+            fields.push(String(this.field2).trim());
+        }
+        if (this.field3 && String(this.field3).trim()) {
+            console.log('XXXXAdding field3:', this.field3);
+            fields.push(String(this.field3).trim());
+        }
+        if (this.field4 && String(this.field4).trim()) {
+            console.log('XXXXAdding field4:', this.field4);
+            fields.push(String(this.field4).trim());
+        }
+        if (this.field5 && String(this.field5).trim()) {
+            console.log('XXXXAdding field5:', this.field5);
+            fields.push(String(this.field5).trim());
+        }
         
         console.log('XXXXProcessed fields array:', fields);
         
-        // For testing in Document Builder - temporarily hardcode some fields
-        // TODO: Remove this after testing
+        // For testing - always use some fields if we have a recordId but no configured fields
         if (fields.length === 0 && this.recordId) {
             console.log('XXXXNo fields configured, using hardcoded test fields');
-            // Use commonly available QuoteLineItem fields
-            fields.push('Product2.Name', 'Quantity', 'UnitPrice', 'TotalPrice');
-            console.log('XXXXUsing hardcoded fields for Document Builder testing:', fields);
+            // Use commonly available QuoteLineItem fields that match your preview with proper formatting
+            fields.push('Product2.Name', 'Quantity', 'UnitPrice', 'TotalPrice', 'Discount');
+            console.log('XXXXUsing hardcoded fields:', fields);
         }
         
         console.log('XXXXFinal configured fields:', fields);
@@ -115,13 +133,95 @@ export default class QuoteLineItemTable extends LightningElement {
 
     // Get column headers for the table with processed data
     get tableHeaders() {
-        return this.configuredFields.map((field, index) => ({
-            label: this.formatFieldLabel(field),
-            fieldName: field,
-            fieldKey: `field${index}`,
-            titleKey: `fieldTitle${index}`,
-            key: `header_${index}`
-        }));
+        const headers = this.configuredFields.map((field, index) => {
+            const fieldType = this.getFieldType(field);
+            return {
+                label: this.formatFieldLabel(field),
+                fieldName: field,
+                fieldKey: `field${index}`,
+                titleKey: `fieldTitle${index}`,
+                key: `header_${index}`,
+                isCurrency: fieldType === 'currency',
+                isPercent: fieldType === 'percent',
+                isNumber: fieldType === 'number',
+                isDate: fieldType === 'date',
+                isText: fieldType === 'text'
+            };
+        });
+        
+        // Ensure we always have 5 headers for template safety (fill with empty headers if needed)
+        while (headers.length < 5) {
+            headers.push({
+                label: '',
+                fieldName: '',
+                fieldKey: `field${headers.length}`,
+                titleKey: `fieldTitle${headers.length}`,
+                key: `header_${headers.length}`,
+                isCurrency: false,
+                isPercent: false,
+                isNumber: false,
+                isDate: false,
+                isText: true
+            });
+        }
+        
+        return headers;
+    }
+
+    // Individual field type getters for template use
+    get field1IsCurrency() { return this.tableHeaders[0]?.isCurrency || false; }
+    get field1IsPercent() { return this.tableHeaders[0]?.isPercent || false; }
+    get field1IsNumber() { return this.tableHeaders[0]?.isNumber || false; }
+    get field1IsDate() { return this.tableHeaders[0]?.isDate || false; }
+
+    get field2IsCurrency() { return this.tableHeaders[1]?.isCurrency || false; }
+    get field2IsPercent() { return this.tableHeaders[1]?.isPercent || false; }
+    get field2IsNumber() { return this.tableHeaders[1]?.isNumber || false; }
+    get field2IsDate() { return this.tableHeaders[1]?.isDate || false; }
+
+    get field3IsCurrency() { return this.tableHeaders[2]?.isCurrency || false; }
+    get field3IsPercent() { return this.tableHeaders[2]?.isPercent || false; }
+    get field3IsNumber() { return this.tableHeaders[2]?.isNumber || false; }
+    get field3IsDate() { return this.tableHeaders[2]?.isDate || false; }
+
+    get field4IsCurrency() { return this.tableHeaders[3]?.isCurrency || false; }
+    get field4IsPercent() { return this.tableHeaders[3]?.isPercent || false; }
+    get field4IsNumber() { return this.tableHeaders[3]?.isNumber || false; }
+    get field4IsDate() { return this.tableHeaders[3]?.isDate || false; }
+
+    get field5IsCurrency() { return this.tableHeaders[4]?.isCurrency || false; }
+    get field5IsPercent() { return this.tableHeaders[4]?.isPercent || false; }
+    get field5IsNumber() { return this.tableHeaders[4]?.isNumber || false; }
+    get field5IsDate() { return this.tableHeaders[4]?.isDate || false; }
+
+    // Determine field type for proper formatting
+    getFieldType(fieldName) {
+        if (!fieldName) return 'text';
+        
+        const lowerField = fieldName.toLowerCase();
+        
+        // Currency fields
+        if (lowerField.includes('price') || lowerField.includes('cost') || lowerField === 'subtotal') {
+            return 'currency';
+        }
+        
+        // Percentage fields
+        if (lowerField.includes('discount') || lowerField.includes('percent')) {
+            return 'percent';
+        }
+        
+        // Number fields
+        if (lowerField === 'quantity' || lowerField === 'linenumber' || lowerField === 'sortorder') {
+            return 'number';
+        }
+        
+        // Date fields
+        if (lowerField.includes('date') || lowerField.includes('time')) {
+            return 'date';
+        }
+        
+        // Default to text
+        return 'text';
     }
 
     // Get the table title with family filter
@@ -146,15 +246,25 @@ export default class QuoteLineItemTable extends LightningElement {
         familyFilter: '$familyFilter' 
     })
     wiredQuoteLineItems({ error, data }) {
-        console.log('XXXXWire method called', { 
+        console.log('XXXXWire method called with parameters:', { 
             recordId: this.recordId, 
+            recordIdType: typeof this.recordId,
             fields: this.configuredFields, 
-            familyFilter: this.familyFilter 
+            familyFilter: this.familyFilter,
+            hasRecordId: !!this.recordId,
+            hasFields: this.configuredFields && this.configuredFields.length > 0,
+            fieldsLength: this.configuredFields?.length,
+            parametersForWire: {
+                recordId: this.recordId, 
+                fields: this.configuredFields, 
+                familyFilter: this.familyFilter
+            }
         });
-        console.log('XXXXWire data:', data);
-        console.log('XXXXWire error:', error);
+        console.log('XXXXWire data received:', data);
+        console.log('XXXXWire error received:', error);
         
         if (data) {
+            console.log('XXXXReceived data from Apex:', data);
             this.quoteLineItems = this.processQuoteLineItems(data);
             this.error = undefined;
             this.isLoading = false;
@@ -164,12 +274,14 @@ export default class QuoteLineItemTable extends LightningElement {
             this.quoteLineItems = [];
             this.isLoading = false;
             console.log('XXXXError occurred:', error);
+            console.log('XXXXError body:', error.body);
+            console.log('XXXXError message:', error.body?.message);
+            console.log('XXXXFull error object:', JSON.stringify(error, null, 2));
         } else {
             // No data and no error – still loading or waiting for parameters
             this.quoteLineItems = [];
             this.error = undefined;
-            // Don't set loading to false here - let connectedCallback handle it
-            console.log('XXXXNo data and no error – wire method waiting');
+            console.log('XXXXNo data and no error – wire method waiting for parameters');
         }
     }
 
@@ -279,6 +391,44 @@ export default class QuoteLineItemTable extends LightningElement {
                 hasRecordId: !!this.effectiveRecordId, 
                 fieldsCount: this.configuredFields.length 
             });
+        }
+
+        // Test imperative call after a short delay to let properties settle
+        setTimeout(() => {
+            this.testImperativeCall();
+        }, 2000);
+    }
+
+    // Test method to call Apex imperatively
+    @api
+    testImperativeCall() {
+        console.log('XXXXTesting imperative call to Apex');
+        if (this.recordId && this.configuredFields.length > 0) {
+            console.log('XXXXCalling Apex imperatively with:', {
+                recordId: this.recordId,
+                fields: this.configuredFields,
+                familyFilter: this.familyFilter
+            });
+            
+            getQuoteLineItems({
+                recordId: this.recordId,
+                fields: this.configuredFields,
+                familyFilter: this.familyFilter
+            })
+            .then(result => {
+                console.log('XXXXImperative call SUCCESS:', result);
+                this.quoteLineItems = this.processQuoteLineItems(result);
+                this.error = undefined;
+                this.isLoading = false;
+            })
+            .catch(error => {
+                console.log('XXXXImperative call ERROR:', error);
+                this.error = error;
+                this.quoteLineItems = [];
+                this.isLoading = false;
+            });
+        } else {
+            console.log('XXXXSkipping imperative call - missing recordId or fields');
         }
     }
 
