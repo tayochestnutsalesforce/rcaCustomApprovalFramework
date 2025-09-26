@@ -32,7 +32,7 @@
                     <thead>
                         <tr class="slds-line-height_reset">
                             <template for:each={tableHeaders} for:item="header">
-                                <th key={header.fieldName} class="slds-text-title_caps table-header" scope="col">
+                                <th key={header.key} class="slds-text-title_caps table-header" scope="col">
                                     <div class="slds-truncate" title={header.label}>
                                         {header.label}
                                     </div>
@@ -43,10 +43,38 @@
                     <tbody>
                         <template for:each={quoteLineItems} for:item="item">
                             <tr key={item.Id} class="slds-hint-parent">
-                                <template for:each={tableHeaders} for:item="header">
-                                    <td key={header.fieldName} class="table-cell">
-                                        <div class="slds-truncate" title={item[header.fieldName]}>
-                                            {item[header.fieldName]}
+                                <template lwc:if={field1}>
+                                    <td class="table-cell">
+                                        <div class="slds-truncate" title={item.field0}>
+                                            {item.field0}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:if={field2}>
+                                    <td class="table-cell">
+                                        <div class="slds-truncate" title={item.field1}>
+                                            {item.field1}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:if={field3}>
+                                    <td class="table-cell">
+                                        <div class="slds-truncate" title={item.field2}>
+                                            {item.field2}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:if={field4}>
+                                    <td class="table-cell">
+                                        <div class="slds-truncate" title={item.field3}>
+                                            {item.field3}
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:if={field5}>
+                                    <td class="table-cell">
+                                        <div class="slds-truncate" title={item.field4}>
+                                            {item.field4}
                                         </div>
                                     </td>
                                 </template>
@@ -58,21 +86,19 @@
 
             <!-- No Data Message -->
             <template lwc:if={configuredFields}>
+                <template lwc:if={isLoading}>
+                    <!-- Loading is shown above -->
+                </template>
+                <template lwc:elseif={error}>
+                    <!-- Error is shown above -->
+                </template>
                 <template lwc:elseif={hasData}>
                     <!-- Data is shown above -->
                 </template>
                 <template lwc:else>
-                    <template lwc:if={isLoading}>
-                        <!-- Loading is shown above -->
-                    </template>
-                    <template lwc:elseif={error}>
-                        <!-- Error is shown above -->
-                    </template>
-                    <template lwc:else>
-                        <div class="slds-text-align_center slds-m-vertical_medium">
-                            <p class="slds-text-body_regular">No quote line items found.</p>
-                        </div>
-                    </template>
+                    <div class="slds-text-align_center slds-m-vertical_medium">
+                        <p class="slds-text-body_regular">No quote line items found.</p>
+                    </div>
                 </template>
             </template>
 

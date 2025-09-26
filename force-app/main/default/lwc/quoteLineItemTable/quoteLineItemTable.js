@@ -14,23 +14,113 @@ export default class QuoteLineItemTable extends LightningElement {
     @track quoteLineItems = [];
     @track error;
     @track isLoading = false;
+    
+    // Add property change detection
+    @track _previousField1;
+    @track _previousField2;
+    @track _previousField3;
+    @track _previousField4;
+    @track _previousField5;
+
+    // Method to manually set fields for testing (can be called from console)
+    @api
+    setTestFields(field1, field2, field3, field4, field5) {
+        console.log('XXXXManually setting test fields:', { field1, field2, field3, field4, field5 });
+        this.field1 = field1 || 'Product2.Name';
+        this.field2 = field2 || 'Quantity';
+        this.field3 = field3 || 'UnitPrice';
+        this.field4 = field4 || 'TotalPrice';
+        this.field5 = field5;
+        
+        // Force re-evaluation
+        this.requestUpdate();
+    }
+
+    // Detect property changes
+    checkForPropertyChanges() {
+        let hasChanges = false;
+        
+        if (this._previousField1 !== this.field1) {
+            console.log('XXXXField1 changed:', { from: this._previousField1, to: this.field1 });
+            this._previousField1 = this.field1;
+            hasChanges = true;
+        }
+        if (this._previousField2 !== this.field2) {
+            console.log('XXXXField2 changed:', { from: this._previousField2, to: this.field2 });
+            this._previousField2 = this.field2;
+            hasChanges = true;
+        }
+        if (this._previousField3 !== this.field3) {
+            console.log('XXXXField3 changed:', { from: this._previousField3, to: this.field3 });
+            this._previousField3 = this.field3;
+            hasChanges = true;
+        }
+        if (this._previousField4 !== this.field4) {
+            console.log('XXXXField4 changed:', { from: this._previousField4, to: this.field4 });
+            this._previousField4 = this.field4;
+            hasChanges = true;
+        }
+        if (this._previousField5 !== this.field5) {
+            console.log('XXXXField5 changed:', { from: this._previousField5, to: this.field5 });
+            this._previousField5 = this.field5;
+            hasChanges = true;
+        }
+        
+        return hasChanges;
+    }
+
+
+
+
 
     // Get the fields that are configured
     get configuredFields() {
+        console.log('xxxx',this.recordId);
+        console.log('XXXXConfigured fields getter called');
+        console.log('XXXXRaw field properties:', {
+            field1: this.field1,
+            field2: this.field2,
+            field3: this.field3,
+            field4: this.field4,
+            field5: this.field5,
+            field1Type: typeof this.field1,
+            field2Type: typeof this.field2,
+            field3Type: typeof this.field3,
+            field4Type: typeof this.field4,
+            field5Type: typeof this.field5
+        });
+        
         const fields = [];
-        if (this.field1) fields.push(this.field1);
-        if (this.field2) fields.push(this.field2);
-        if (this.field3) fields.push(this.field3);
-        if (this.field4) fields.push(this.field4);
-        if (this.field5) fields.push(this.field5);
+        if (this.field1 && this.field1.trim()) fields.push(this.field1.trim());
+        if (this.field2 && this.field2.trim()) fields.push(this.field2.trim());
+        if (this.field3 && this.field3.trim()) fields.push(this.field3.trim());
+        if (this.field4 && this.field4.trim()) fields.push(this.field4.trim());
+        if (this.field5 && this.field5.trim()) fields.push(this.field5.trim());
+        
+        console.log('XXXXProcessed fields array:', fields);
+        
+        // For testing in Document Builder - temporarily hardcode some fields
+        // TODO: Remove this after testing
+        if (fields.length === 0 && this.recordId) {
+            console.log('XXXXNo fields configured, using hardcoded test fields');
+            // Use commonly available QuoteLineItem fields
+            fields.push('Product2.Name', 'Quantity', 'UnitPrice', 'TotalPrice');
+            console.log('XXXXUsing hardcoded fields for Document Builder testing:', fields);
+        }
+        
+        console.log('XXXXFinal configured fields:', fields);
+        
         return fields;
     }
 
-    // Get column headers for the table
+    // Get column headers for the table with processed data
     get tableHeaders() {
-        return this.configuredFields.map(field => ({
+        return this.configuredFields.map((field, index) => ({
             label: this.formatFieldLabel(field),
-            fieldName: field
+            fieldName: field,
+            fieldKey: `field${index}`,
+            titleKey: `fieldTitle${index}`,
+            key: `header_${index}`
         }));
     }
 
@@ -44,20 +134,42 @@ export default class QuoteLineItemTable extends LightningElement {
         return this.quoteLineItems && this.quoteLineItems.length > 0;
     }
 
+    // Helper method to get field value safely for templates
+    getFieldValueForTemplate(item, fieldKey) {
+        return item && item.fieldValues && item.fieldValues[fieldKey] || '';
+    }
+
     // Wire to get quote line items when recordId or other properties change
     @wire(getQuoteLineItems, { 
-        quoteId: '$recordId', 
+        recordId: '$recordId', 
         fields: '$configuredFields', 
         familyFilter: '$familyFilter' 
     })
     wiredQuoteLineItems({ error, data }) {
-        this.isLoading = false;
+        console.log('XXXXWire method called', { 
+            recordId: this.recordId, 
+            fields: this.configuredFields, 
+            familyFilter: this.familyFilter 
+        });
+        console.log('XXXXWire data:', data);
+        console.log('XXXXWire error:', error);
+        
         if (data) {
             this.quoteLineItems = this.processQuoteLineItems(data);
             this.error = undefined;
+            this.isLoading = false;
+            console.log('XXXXProcessed items:', this.quoteLineItems);
         } else if (error) {
             this.error = error;
             this.quoteLineItems = [];
+            this.isLoading = false;
+            console.log('XXXXError occurred:', error);
+        } else {
+            // No data and no error – still loading or waiting for parameters
+            this.quoteLineItems = [];
+            this.error = undefined;
+            // Don't set loading to false here - let connectedCallback handle it
+            console.log('XXXXNo data and no error – wire method waiting');
         }
     }
 
@@ -67,12 +179,15 @@ export default class QuoteLineItemTable extends LightningElement {
         
         return data.map(item => {
             const processedItem = { ...item };
-            // Ensure all configured fields are accessible
-            this.configuredFields.forEach(field => {
-                if (!(field in processedItem)) {
-                    processedItem[field] = this.getFieldValue(item, field);
-                }
+            
+            // Create direct field properties to avoid computed property access
+            this.configuredFields.forEach((field, index) => {
+                const value = this.getFieldValue(item, field);
+                // Add as direct properties that can be accessed in template
+                processedItem[`field${index}`] = value;
+                processedItem[`fieldTitle${index}`] = value; // For title attribute
             });
+            
             return processedItem;
         });
     }
@@ -119,9 +234,59 @@ export default class QuoteLineItemTable extends LightningElement {
     }
 
     connectedCallback() {
+        console.log('XXXXComponent connected', { 
+            recordId: this.recordId,
+            effectiveRecordId: this.effectiveRecordId,
+            field1: this.field1,
+            field2: this.field2,
+            configuredFields: this.configuredFields 
+        });
+        
+        // Initialize property tracking
+        this._previousField1 = this.field1;
+        this._previousField2 = this.field2;
+        this._previousField3 = this.field3;
+        this._previousField4 = this.field4;
+        this._previousField5 = this.field5;
+        
+        // Debug all available properties on this component
+        console.log('XXXXAll component properties:', {
+            recordId: this.recordId,
+            contextRecordId: this.contextRecordId,
+            effectiveRecordId: this.effectiveRecordId,
+            field1: this.field1,
+            field2: this.field2,
+            field3: this.field3,
+            field4: this.field4,
+            field5: this.field5,
+            familyFilter: this.familyFilter
+        });
+        
+        // Introspect all properties on this object
+        console.log('XXXXAll enumerable properties on this:', Object.keys(this));
+        console.log('XXXXAll properties with values:', Object.getOwnPropertyNames(this).filter(prop => this[prop] !== undefined));
+        
+        // Check if we're in a specific context
+        console.log('XXXXWindow location:', window.location.href);
+        console.log('XXXXPage reference:', this.pageRef);
+        
         // Set loading state when component initializes
-        if (this.recordId && this.configuredFields.length > 0) {
+        if (this.effectiveRecordId && this.configuredFields.length > 0) {
             this.isLoading = true;
+            console.log('XXXXSetting loading to true');
+        } else {
+            console.log('XXXXNot setting loading - missing recordId or fields', { 
+                hasRecordId: !!this.effectiveRecordId, 
+                fieldsCount: this.configuredFields.length 
+            });
+        }
+    }
+
+    renderedCallback() {
+        // Check for property changes
+        const hasChanges = this.checkForPropertyChanges();
+        if (hasChanges) {
+            console.log('XXXXProperty changes detected in renderedCallback');
         }
     }
 }
