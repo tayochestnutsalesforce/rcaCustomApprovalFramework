@@ -110,7 +110,7 @@
         <exitConditionLogic>and</exitConditionLogic>
         <stageSteps>
             <name>Set_Quote_to_Approved</name>
-            <actionName>POV_Update_Quote_Status</actionName>
+            <actionName>RCA_Update_Quote_Status</actionName>
             <actionType>stepBackground</actionType>
             <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
@@ -394,7 +394,7 @@
         <exitConditionLogic>and</exitConditionLogic>
         <stageSteps>
             <name>Set_Back_to_Draft</name>
-            <actionName>POV_Update_Quote_Status</actionName>
+            <actionName>RCA_Update_Quote_Status</actionName>
             <actionType>stepBackground</actionType>
             <assignees>
                 <assignee>
@@ -433,7 +433,7 @@
         <exitConditionLogic>and</exitConditionLogic>
         <stageSteps>
             <name>Update_Quote_Status</name>
-            <actionName>POV_Update_Quote_Status</actionName>
+            <actionName>RCA_Update_Quote_Status</actionName>
             <actionType>stepBackground</actionType>
             <assignees>
                 <assignee>
