@@ -137,36 +137,91 @@ The RCA (Revenue Cloud Approval) Custom Approval Framework is a comprehensive Sa
 
 The framework includes several key Flows for approval process automation:
 
-#### RCA_Approval_Orch
+#### RCA_Approval_Orch (Main Orchestration Flow)
 Main orchestration flow managing the complete approval lifecycle:
-- **Level-based progression**: Moves through approval levels sequentially
-- **Status evaluation**: Checks approval/rejection at each stage
-- **Automatic transitions**: Progresses to next level on approval
-- **Rejection handling**: Manages rejection scenarios and notifications
+- **Multi-stage approval workflow**: Supports up to 4 approval levels with sequential processing
+- **Level-based progression**: Moves through approval levels (Stage 1-4) sequentially
+- **Status evaluation**: Checks approval/rejection at each stage using decision nodes
+- **Automatic transitions**: Progresses to next level on approval, terminates on rejection
+- **Approval recall handling**: Supports recall functionality to reset quotes to Draft status
+- **Quote status management**: Updates Quote status to "Approved" on final approval or "Draft" on rejection/recall
 
-#### RCA_Stage_Evaluation / RCA_Evaluate_Stage
-Evaluates approval requirements at each stage:
-- Determines which approval rules should be triggered
-- Assigns appropriate approvers based on rule configuration
-- Updates Live_Approval__c trigger flags
+#### RCA_Approval_Rule_Evaluation_Flow
+Evaluates and initializes approval rules for quotes:
+- Determines which approval rules should be triggered based on quote criteria
+- Creates or updates Live_Approval__c records with appropriate rule assignments
+- Populates approval rule slots (1-20) with triggered rules
+- Sets up approver assignments based on rule configuration
+
+#### RCA_Approval_Evaluate_Approve_Reject
+Individual approval action flow called for each approval step:
+- Handles individual approval/rejection decisions
+- Processes approval comments and decisions
+- Supports custom email notifications with approval chain context
+- Integrates with Smart Approval capabilities when available
+
+#### RCA_Set_Approve_or_Rejected
+Stage-level status evaluation flow:
+- Evaluates multiple approval statuses within a level
+- Determines overall stage status (Approve/Reject) based on individual approvals
+- Returns stage-level decision for orchestration flow progression
+- Handles complex approval logic for multiple approvers per level
+
+#### RCA_Stage_Evaluation
+Post-stage evaluation and processing:
+- Called after each approval stage completion
+- Updates Live_Approval__c records with current approval statuses
+- Prepares data for next stage progression
+- Handles stage transition logic
 
 #### RCA_Subflow_Create_Live_Approval_Record
 Creates and initializes Live_Approval__c records:
 - Links approval rules to specific quote contexts
-- Sets initial status values
-- Establishes approval rule slot assignments
+- Sets initial status values for all approval slots
+- Establishes approval rule slot assignments (1-20)
+- Initializes triggered flags and approver assignments
 
 #### RCA_Summary_Variable_Flow
 Populates context variables for approval evaluation:
-- Calculates quote totals and quantities
-- Extracts product family information
+- Calculates quote totals, quantities, and line item summaries
+- Extracts product family and grouping information
 - Sets up variables for rule trigger evaluation
+- Provides data context for approval rule criteria evaluation
+
+#### RCA_Update_Quote_Status
+Quote status management utility flow:
+- Updates Quote status field based on approval outcomes
+- Called from various stages (approval, rejection, recall)
+- Handles status transitions throughout the approval lifecycle
+- Supports status values: Draft, Approved, and custom statuses
+
+#### RCA_Approver_Locator
+Dynamic approver assignment and lookup:
+- Locates appropriate approvers based on approval rule configuration
+- Handles user and queue assignment logic
+- Manages fallback approver scenarios
+- Outputs approver information for Live_Approval__c assignment
 
 #### Supporting Flows
-- **RCA_Approval_Preview**: Manages approval preview data
-- **RCA_Prepare_Approval_Questions_for_Answers**: Sets up questionnaire data
-- **RCA_Screen_Approval_Answers**: Handles approval question responses
-- **RCA_Set_Approve_or_Rejected**: Processes approval decisions
+
+**RCA_Approval_Preview**
+- Manages approval preview data for UI components
+- Formats approval data for Lightning Web Component consumption
+
+**RCA_Prepare_Approval_Questions_for_Answers**
+- Sets up questionnaire data for approval rules
+- Retrieves approval questions associated with triggered rules
+- Prepares question/answer context for approvers
+
+**RCA_Screen_Approval_Answers**
+- Handles approval question responses and data collection
+- Processes approver input for approval questions
+- Stores answers in ApprovalAnswers__c records
+
+**RCA_Recall_Live_Approval_Statuses**
+- Manages approval recall scenarios
+- Resets Live_Approval__c statuses when approvals are recalled
+- Synchronizes approval states during recall processes
 
 ## Implementation Guide
 
