@@ -2,7 +2,7 @@
   @description       : 
   @author            : ChangeMeIn@UserSettingsUnder.SFDoc
   @group             : 
-  @last modified on  : 09-26-2025
+  @last modified on  : 09-29-2025
   @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 -->
 <template>
@@ -38,10 +38,38 @@
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
                     <thead>
                         <tr class="slds-line-height_reset">
-                            <template for:each={tableHeaders} for:item="header">
-                                <th key={header.key} class="slds-text-title_caps table-header" scope="col">
-                                    <div class="slds-truncate" title={header.label}>
-                                        {header.label}
+                            <template lwc:if={field1}>
+                                <th class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={field1Label}>
+                                        {field1Label}
+                                    </div>
+                                </th>
+                            </template>
+                            <template lwc:if={field2}>
+                                <th class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={field2Label}>
+                                        {field2Label}
+                                    </div>
+                                </th>
+                            </template>
+                            <template lwc:if={field3}>
+                                <th class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={field3Label}>
+                                        {field3Label}
+                                    </div>
+                                </th>
+                            </template>
+                            <template lwc:if={field4}>
+                                <th class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={field4Label}>
+                                        {field4Label}
+                                    </div>
+                                </th>
+                            </template>
+                            <template lwc:if={field5}>
+                                <th class="slds-text-title_caps table-header" scope="col">
+                                    <div class="slds-truncate" title={field5Label}>
+                                        {field5Label}
                                     </div>
                                 </th>
                             </template>

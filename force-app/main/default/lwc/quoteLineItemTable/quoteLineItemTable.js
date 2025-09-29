@@ -9,6 +9,11 @@ export default class QuoteLineItemTable extends LightningElement {
     @api field3;
     @api field4;
     @api field5;
+    @api field1Header;
+    @api field2Header;
+    @api field3Header;
+    @api field4Header;
+    @api field5Header;
     @api familyFilter;
 
     @track quoteLineItems = [];
@@ -83,6 +88,11 @@ export default class QuoteLineItemTable extends LightningElement {
             field3: this.field3,
             field4: this.field4,
             field5: this.field5,
+            field1Header: this.field1Header,
+            field2Header: this.field2Header,
+            field3Header: this.field3Header,
+            field4Header: this.field4Header,
+            field5Header: this.field5Header,
             field1Type: typeof this.field1,
             field2Type: typeof this.field2,
             field3Type: typeof this.field3,
@@ -133,10 +143,14 @@ export default class QuoteLineItemTable extends LightningElement {
 
     // Get column headers for the table with processed data
     get tableHeaders() {
+        const customHeaders = [this.field1Header, this.field2Header, this.field3Header, this.field4Header, this.field5Header];
+        
         const headers = this.configuredFields.map((field, index) => {
             const fieldType = this.getFieldType(field);
+            const customHeader = customHeaders[index];
+            
             return {
-                label: this.formatFieldLabel(field),
+                label: customHeader && customHeader.trim() ? customHeader.trim() : this.formatFieldLabel(field),
                 fieldName: field,
                 fieldKey: `field${index}`,
                 titleKey: `fieldTitle${index}`,
@@ -149,23 +163,32 @@ export default class QuoteLineItemTable extends LightningElement {
             };
         });
         
-        // Ensure we always have 5 headers for template safety (fill with empty headers if needed)
-        while (headers.length < 5) {
-            headers.push({
-                label: '',
-                fieldName: '',
-                fieldKey: `field${headers.length}`,
-                titleKey: `fieldTitle${headers.length}`,
-                key: `header_${headers.length}`,
-                isCurrency: false,
-                isPercent: false,
-                isNumber: false,
-                isDate: false,
-                isText: true
-            });
+        // Ensure we always have 5 headers for template safety, but only for the fields that exist
+        // This allows safe access to tableHeaders[0] through tableHeaders[4] in templates
+        const allFields = [this.field1, this.field2, this.field3, this.field4, this.field5];
+        const allHeaders = [];
+        
+        for (let i = 0; i < 5; i++) {
+            if (i < headers.length) {
+                allHeaders.push(headers[i]);
+            } else {
+                const customHeader = customHeaders[i];
+                allHeaders.push({
+                    label: customHeader && customHeader.trim() ? customHeader.trim() : '',
+                    fieldName: allFields[i] || '',
+                    fieldKey: `field${i}`,
+                    titleKey: `fieldTitle${i}`,
+                    key: `header_${i}`,
+                    isCurrency: false,
+                    isPercent: false,
+                    isNumber: false,
+                    isDate: false,
+                    isText: true
+                });
+            }
         }
         
-        return headers;
+        return allHeaders;
     }
 
     // Individual field type getters for template use
@@ -193,6 +216,13 @@ export default class QuoteLineItemTable extends LightningElement {
     get field5IsPercent() { return this.tableHeaders[4]?.isPercent || false; }
     get field5IsNumber() { return this.tableHeaders[4]?.isNumber || false; }
     get field5IsDate() { return this.tableHeaders[4]?.isDate || false; }
+
+    // Individual header label getters for template use
+    get field1Label() { return this.tableHeaders[0]?.label || ''; }
+    get field2Label() { return this.tableHeaders[1]?.label || ''; }
+    get field3Label() { return this.tableHeaders[2]?.label || ''; }
+    get field4Label() { return this.tableHeaders[3]?.label || ''; }
+    get field5Label() { return this.tableHeaders[4]?.label || ''; }
 
     // Determine field type for proper formatting
     getFieldType(fieldName) {

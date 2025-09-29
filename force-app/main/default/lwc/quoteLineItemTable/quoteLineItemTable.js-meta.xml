@@ -10,28 +10,38 @@
         <targetConfig targets="lightning__RecordPage">
             <property name="field1" type="String" label="Field 1" description="First field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field1Header" type="String" label="Field 1 Header" description="Custom header text for Field 1 (optional - will use field name if empty)"/>
             <property name="field2" type="String" label="Field 2" description="Second field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field2Header" type="String" label="Field 2 Header" description="Custom header text for Field 2 (optional - will use field name if empty)"/>
             <property name="field3" type="String" label="Field 3" description="Third field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field3Header" type="String" label="Field 3 Header" description="Custom header text for Field 3 (optional - will use field name if empty)"/>
             <property name="field4" type="String" label="Field 4" description="Fourth field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field4Header" type="String" label="Field 4 Header" description="Custom header text for Field 4 (optional - will use field name if empty)"/>
             <property name="field5" type="String" label="Field 5" description="Fifth field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field5Header" type="String" label="Field 5 Header" description="Custom header text for Field 5 (optional - will use field name if empty)"/>
             <property name="familyFilter" type="String" label="Family Filter" description="Filter value for the Family field on QuoteLineItem"/>
         </targetConfig>
 
          <targetConfig targets="lightning__ServiceDocument">
             <property name="field1" type="String" label="Field 1" description="First field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field1Header" type="String" label="Field 1 Header" description="Custom header text for Field 1 (optional - will use field name if empty)"/>
             <property name="field2" type="String" label="Field 2" description="Second field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field2Header" type="String" label="Field 2 Header" description="Custom header text for Field 2 (optional - will use field name if empty)"/>
             <property name="field3" type="String" label="Field 3" description="Third field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field3Header" type="String" label="Field 3 Header" description="Custom header text for Field 3 (optional - will use field name if empty)"/>
             <property name="field4" type="String" label="Field 4" description="Fourth field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field4Header" type="String" label="Field 4 Header" description="Custom header text for Field 4 (optional - will use field name if empty)"/>
             <property name="field5" type="String" label="Field 5" description="Fifth field to display" 
                       datasource="Product2.Name,Product2.ProductCode,Quantity,UnitPrice,TotalPrice,ListPrice,Discount,Description,Product2.Description,Product2.Family,PricebookEntry.Name,Quote.Name,SortOrder,LineNumber,ServiceDate,Product2.IsActive,Subtotal"/>
+            <property name="field5Header" type="String" label="Field 5 Header" description="Custom header text for Field 5 (optional - will use field name if empty)"/>
             <property name="familyFilter" type="String" label="Family Filter" description="Filter value for the Family field on QuoteLineItem"/>
         </targetConfig>
     </targetConfigs>
