@@ -41,6 +41,42 @@
             <targetReference>Rule_Loop</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_Name_to_Skip_for_Testing</name>
+        <label>Check Name to Skip for Testing</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Approval_Rules</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not a Test</defaultConnectorLabel>
+        <rules>
+            <name>Is_Test_Running</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote.Name</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Test Quote</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Q1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Quote.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Q2</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Is Test Running</label>
+        </rules>
+    </decisions>
     <description>Fired From Quote After Trigger to Create a Live Approval Record.</description>
     <environments>Default</environments>
     <interviewLabel>RCA Subflow Create Live Approval Record {!$Flow.CurrentDateTime}</interviewLabel>
@@ -101,11 +137,32 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Quote</name>
+        <label>Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Name_to_Skip_for_Testing</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Quote</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Approval_Rules</targetReference>
+            <targetReference>Quote</targetReference>
         </connector>
     </start>
     <status>Active</status>

@@ -91,10 +91,27 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Preview_Screen</targetReference>
+            <targetReference>Evaluate_Quote</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Evaluate_Quote</name>
+        <label>Evaluate Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Preview_Screen</targetReference>
+        </connector>
+        <flowName>RCA_Approval_Rule_Evaluation_Flow</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>outputJSON</name>
         <dataType>String</dataType>

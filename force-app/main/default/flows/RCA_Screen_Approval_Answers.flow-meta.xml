@@ -58,7 +58,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_Quote_to_Needs_Review</targetReference>
+                <targetReference>Kick_Off_Approval_Background_Flow</targetReference>
             </connector>
             <label>No Records We can Skip to the End</label>
         </rules>
@@ -126,15 +126,18 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Quote_to_Needs_Review</targetReference>
+            <targetReference>Kick_Off_Approval_Background_Flow</targetReference>
         </connector>
         <inputReference>AnswersCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Quote_to_Needs_Review</name>
-        <label>Update Quote to Needs Review</label>
+        <name>Update_Quote_to_Pending_Approval</name>
+        <label>Update Quote to Pending Approval</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <connector>
+            <targetReference>Approval_Finish</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -146,7 +149,7 @@
         <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Needs Review</stringValue>
+                <stringValue>Pending Approval</stringValue>
             </value>
         </inputAssignments>
         <object>Quote</object>
@@ -228,6 +231,31 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Approval_Finish</name>
+        <label>Approval Finish</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SubmissionText</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;&lt;em&gt;Quote Submitted for Approval&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -236,6 +264,23 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Kick_Off_Approval_Background_Flow</name>
+        <label>Kick Off Approval Background Flow</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Quote_to_Pending_Approval</targetReference>
+        </connector>
+        <flowName>RCA_Approval_Rule_Evaluation_Flow</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>AnswersCollection</name>
         <dataType>SObject</dataType>

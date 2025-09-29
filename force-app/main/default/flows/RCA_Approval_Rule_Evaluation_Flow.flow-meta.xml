@@ -364,6 +364,45 @@
         </connector>
     </collectionProcessors>
     <decisions>
+        <name>Check_Quote_Status</name>
+        <label>Check Quote Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Get_Live_Approval_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Pending Approval</defaultConnectorLabel>
+        <rules>
+            <name>Draft</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Quote.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Draft</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Quote.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Quote.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recalled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Summary_Variables</targetReference>
+            </connector>
+            <label>Draft</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>R3_Decision</name>
         <label>R3 Decision</label>
         <locationX>0</locationX>
@@ -1295,6 +1334,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Quote</name>
+        <label>Get Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Quote_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Quote</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Manager</name>
         <label>Manager</label>
         <locationX>0</locationX>
@@ -1368,7 +1428,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Summary_Variables</targetReference>
+            <targetReference>Get_Quote</targetReference>
         </connector>
     </start>
     <status>Active</status>
