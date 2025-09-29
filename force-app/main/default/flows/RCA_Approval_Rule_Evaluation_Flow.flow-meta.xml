@@ -29,35 +29,67 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Copy_1_of_2_1_Trigger</name>
-        <label>Copy 1 of 2-1 Trigger</label>
+        <name>Add_to_Live_List</name>
+        <label>Add to Live List</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ruleTriggered</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>approvalLiveList</assignToReference>
+            <operator>Add</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>approvalLive</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Loop4</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_2_of_Trigger_Rule</name>
-        <label>Copy 2 of Trigger Rule</label>
+        <name>Add_to_Live_List_0</name>
+        <label>Add to Live List</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>ruleTriggered</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>approvalLiveList</assignToReference>
+            <operator>Add</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>approvalLive</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Loop3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_Live_List_0_0</name>
+        <label>Add to Live List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>approvalLiveList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>approvalLive</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_Live_List_0_0_0</name>
+        <label>Add to Live List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>approvalLiveList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>approvalLive</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop1</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -69,14 +101,7 @@
             <assignToReference>LevelsList</assignToReference>
             <operator>Add</operator>
             <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>LevelsList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>4.0</numberValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -90,27 +115,18 @@
             <assignToReference>LevelsList</assignToReference>
             <operator>Add</operator>
             <value>
-                <numberValue>4.0</numberValue>
+                <numberValue>2.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>LevelsList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Levels_Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Not_Triggered_User</name>
-        <label>Not Triggered User</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>approver</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>dummy@dummy.com</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_Live_Approval</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -139,120 +155,125 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Which_Rule_am_I_Running</targetReference>
+            <targetReference>Rule_Check</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Group_Id</name>
-        <label>Set Group Id</label>
+        <name>Reset_Triggering_0</name>
+        <label>Reset Triggering</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>approver</assignToReference>
+            <assignToReference>ruleTriggered</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Rule_Loop.Approver__c</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Live_Approval</targetReference>
+            <targetReference>Rule_Check_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Live_Approval</name>
-        <label>Set Live Approval</label>
+        <name>Reset_Triggering_0_0</name>
+        <label>Reset Triggering</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>approvalLive.approvalRuleId</assignToReference>
+            <assignToReference>ruleTriggered</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Rule_Loop.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>approvalLive.approver</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>approver</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>approvalLive.triggeringStatus</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ruleTriggered</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>approvalLive.approvalStatus</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Pending</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>approvalLiveList</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>approvalLive</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Rule_Loop</targetReference>
+            <targetReference>Rule_Check_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Manager_Id</name>
-        <label>Set Manager Id</label>
+        <name>Reset_Triggering_0_0_0</name>
+        <label>Reset Triggering</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>approver</assignToReference>
+            <assignToReference>ruleTriggered</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Manager.Username</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Live_Approval</targetReference>
+            <targetReference>Rule_Check_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Managers_Manager</name>
-        <label>Set Managers Manager</label>
+        <name>Set_Non_Triggered_Rules</name>
+        <label>Set Non Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>approver</assignToReference>
+            <assignToReference>ruleTriggered</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ManagerManager.Username</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Live_Approval</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Approver_Locator</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_User_Approver</name>
-        <label>Set User Approver</label>
+        <name>Set_Non_Triggered_Rules_0</name>
+        <label>Set Non Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>approver</assignToReference>
+            <assignToReference>ruleTriggered</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Rule_Loop.Approver__c</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Live_Approval</targetReference>
+            <targetReference>Approver_Locator_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Trigger_Rule</name>
-        <label>Trigger Rule</label>
+        <name>Set_Non_Triggered_Rules_0_0</name>
+        <label>Set Non Triggered Rules</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ruleTriggered</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Approver_Locator_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Non_Triggered_Rules_0_0_0</name>
+        <label>Set Non Triggered Rules</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ruleTriggered</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Approver_Locator_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Triggered_Rules</name>
+        <label>Set Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -263,12 +284,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Approver_Locator</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>X2_1_Trigger</name>
-        <label>2-1 Trigger</label>
+        <name>Set_Triggered_Rules_0</name>
+        <label>Set Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -279,12 +300,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Approver_Locator_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>X3_1_Trigger</name>
-        <label>3-1 Trigger</label>
+        <name>Set_Triggered_Rules_0_0</name>
+        <label>Set Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -295,12 +316,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Approver_Locator_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>X3_2_Trigger</name>
-        <label>Rule 4 Trigger</label>
+        <name>Set_Triggered_Rules_0_0_0</name>
+        <label>Set Triggered Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -311,782 +332,830 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Approver_Locator_0_0_0</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>X4_1_Trigger</name>
-        <label>Rule5Trigger</label>
+    <collectionProcessors>
+        <name>Filter_Rules</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter Rules</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>ruleTriggered</assignToReference>
-            <operator>Assign</operator>
-            <value>
+        <assignNextValueToReference>currentItem_Filter_Rules</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Approval_Rules</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Rules.Level__c</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>Levels_Loop</elementReference>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_Filter_Rules.IsActive__c</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
+            </rightValue>
+        </conditions>
         <connector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Which_Level_Are_We_Evaluating</targetReference>
         </connector>
-    </assignments>
-    <assignments>
-        <name>X4_6_Trigger</name>
-        <label>Rule6Trigger</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>ruleTriggered</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Select_Approver</targetReference>
-        </connector>
-    </assignments>
+    </collectionProcessors>
     <decisions>
-        <name>Discount_Rule</name>
-        <label>Discount Rule</label>
+        <name>R3_Decision</name>
+        <label>R3 Decision</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
+            <targetReference>Set_Non_Triggered_Rules</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Not Triggered R3</defaultConnectorLabel>
         <rules>
-            <name>Discount_10</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>10.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Copy_2_of_Trigger_Rule</targetReference>
-            </connector>
-            <label>Discount &gt; 10</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Line_Count_Rule</name>
-        <label>Line Count Rule</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Line_Count_1</name>
+            <name>Triggered_R3_Logic</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Summary_Variables.a3LineCount</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>1</stringValue>
+                    <stringValue>10</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>X2_1_Trigger</targetReference>
+                <targetReference>Set_Triggered_Rules</targetReference>
             </connector>
-            <label>Line Count =1</label>
+            <label>Triggered R3 Logic</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Select_Approver</name>
-        <label>Select Approver</label>
+        <name>R3_Decision_0</name>
+        <label>R3 Decision</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Not_Triggered_User</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Non_Triggered_Rules_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Rule Note Triggered</defaultConnectorLabel>
+        <defaultConnectorLabel>Not Triggered R3</defaultConnectorLabel>
         <rules>
-            <name>Triggered_User</name>
+            <name>Triggered_R3_Logic_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Approver_Type__c</leftValueReference>
+                <leftValueReference>Summary_Variables.a3LineCount</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>User</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ruleTriggered</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>10</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_User_Approver</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0</targetReference>
             </connector>
-            <label>Triggered - User</label>
-        </rules>
-        <rules>
-            <name>Triggered_Manager</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Rule_Loop.Approver_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Manager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ruleTriggered</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Manager_Id</targetReference>
-            </connector>
-            <label>Triggered Manager</label>
-        </rules>
-        <rules>
-            <name>Triggered_Group</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Rule_Loop.Approver_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Group</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ruleTriggered</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Group_Id</targetReference>
-            </connector>
-            <label>Triggered - Group</label>
-        </rules>
-        <rules>
-            <name>Triggered_ManagerManager</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Rule_Loop.Approver_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ManagerManager</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ruleTriggered</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Managers_Manager</targetReference>
-            </connector>
-            <label>Triggered - ManagerManager</label>
+            <label>Triggered R3 Logic</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Select_Level1</name>
-        <label>Select Level</label>
+        <name>R3_Decision_0_0</name>
+        <label>R3 Decision</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Non_Triggered_Rules_0_0</targetReference>
         </defaultConnector>
+        <defaultConnectorLabel>Not Triggered R3</defaultConnectorLabel>
+        <rules>
+            <name>Triggered_R3_Logic_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Summary_Variables.a3LineCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>10</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>Triggered R3 Logic</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>R3_Decision_0_0_0</name>
+        <label>R3 Decision</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_Non_Triggered_Rules_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Triggered R3</defaultConnectorLabel>
+        <rules>
+            <name>Triggered_R3_Logic_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Summary_Variables.a3LineCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>10</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>Triggered R3 Logic</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Rule_Check</name>
+        <label>Rule Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Level_1</name>
+            <name>R1Triggered</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>1.0</numberValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Type_Rule</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level_2</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <numberValue>2.0</numberValue>
+                    <numberValue>20.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Discount_Rule</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules</targetReference>
             </connector>
-            <label>Level 2</label>
+            <label>R1Triggered</label>
         </rules>
         <rules>
-            <name>Level_3</name>
+            <name>R1NotTriggered</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Subtotal_Test</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level_4</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>X3_2_Trigger</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Select_Levela</name>
-        <label>Select Level</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Level1a</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>1.0</numberValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>X4_1_Trigger</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level2a</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>2.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 2</label>
-        </rules>
-        <rules>
-            <name>Level3a</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level4a</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>SelectLevelb</name>
-        <label>Select Level</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Level1b</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>X4_6_Trigger</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level2b</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>2.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 2</label>
-        </rules>
-        <rules>
-            <name>Level3b</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level4b</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>SelectLevelx</name>
-        <label>Select Level</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Level1x</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Line_Count_Rule</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level2x</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>2.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Total_Unit_Cost_Test</targetReference>
-            </connector>
-            <label>Level 2</label>
-        </rules>
-        <rules>
-            <name>Level3x</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level4x</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>SelectLevely</name>
-        <label>Select Level</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Level1y</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level2y</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>2.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 2</label>
-        </rules>
-        <rules>
-            <name>Level3y</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level4y</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>SelectLevelz</name>
-        <label>Select Level</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Level1z</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 1</label>
-        </rules>
-        <rules>
-            <name>Level2z</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>2.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 2</label>
-        </rules>
-        <rules>
-            <name>Level3z</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>3.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 3</label>
-        </rules>
-        <rules>
-            <name>Level4z</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Levels_Loop</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>4.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Approver</targetReference>
-            </connector>
-            <label>Level 4</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Subtotal_Test</name>
-        <label>Subtotal Test</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Subtotal_1000</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Summary_Variables.a5SubTotal</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>1000.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>X3_1_Trigger</targetReference>
-            </connector>
-            <label>Subtotal &gt; 1000</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Total_Unit_Cost_Test</name>
-        <label>Total Unit Cost Test</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Copy_1_of_Line_Count_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_2_1_Trigger</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules</targetReference>
             </connector>
-            <label>Copy 1 of Line Count =1</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Type_Rule</name>
-        <label>Type Rule</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Advanced_Config</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>AdvancedConfigurator</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Trigger_Rule</targetReference>
-            </connector>
-            <label>Advanced Config</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Which_Rule_am_I_Running</name>
-        <label>Which Rule am I Running</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Select_Approver</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Rule_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Select_Level1</targetReference>
-            </connector>
-            <label>Rule 1</label>
+            <label>R1NotTriggered</label>
         </rules>
         <rules>
-            <name>Rule_2</name>
+            <name>R2Triggered</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>2.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>SelectLevelx</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules</targetReference>
             </connector>
-            <label>Rule 2</label>
+            <label>R2Triggered</label>
         </rules>
         <rules>
-            <name>Rule_3</name>
+            <name>R2NotTriggered</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules</targetReference>
+            </connector>
+            <label>R2NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>3.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelectLevely</targetReference>
+                <targetReference>R3_Decision</targetReference>
             </connector>
-            <label>Rule 3</label>
+            <label>R3</label>
         </rules>
         <rules>
-            <name>Rule_4</name>
+            <name>R4Triggered</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules</targetReference>
+            </connector>
+            <label>R4Triggered</label>
+        </rules>
+        <rules>
+            <name>R4NotTriggered</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop4.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules</targetReference>
+            </connector>
+            <label>R4NotTriggered</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Rule_Check_0</name>
+        <label>Rule Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>R1Triggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R1Triggered</label>
+        </rules>
+        <rules>
+            <name>R1NotTriggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Non_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R1NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R2Triggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R2Triggered</label>
+        </rules>
+        <rules>
+            <name>R2NotTriggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R2NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R3_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>3.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>R3_Decision_0</targetReference>
+            </connector>
+            <label>R3</label>
+        </rules>
+        <rules>
+            <name>R4Triggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R4Triggered</label>
+        </rules>
+        <rules>
+            <name>R4NotTriggered_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop3.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0</targetReference>
+            </connector>
+            <label>R4NotTriggered</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Rule_Check_0_0</name>
+        <label>Rule Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>R1Triggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R1Triggered</label>
+        </rules>
+        <rules>
+            <name>R1NotTriggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Non_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R1NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R2Triggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R2Triggered</label>
+        </rules>
+        <rules>
+            <name>R2NotTriggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R2NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R3_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>3.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>R3_Decision_0_0</targetReference>
+            </connector>
+            <label>R3</label>
+        </rules>
+        <rules>
+            <name>R4Triggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R4Triggered</label>
+        </rules>
+        <rules>
+            <name>R4NotTriggered_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop2.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0_0</targetReference>
+            </connector>
+            <label>R4NotTriggered</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Rule_Check_0_0_0</name>
+        <label>Rule Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>R1Triggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R1Triggered</label>
+        </rules>
+        <rules>
+            <name>R1NotTriggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a1QuoteDiscount</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Non_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R1NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R2Triggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R2Triggered</label>
+        </rules>
+        <rules>
+            <name>R2NotTriggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>2.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a2QuoteType</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Test</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R2NotTriggered</label>
+        </rules>
+        <rules>
+            <name>R3_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>3.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>R3_Decision_0_0_0</targetReference>
+            </connector>
+            <label>R3</label>
+        </rules>
+        <rules>
+            <name>R4Triggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R4Triggered</label>
+        </rules>
+        <rules>
+            <name>R4NotTriggered_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop1.Order__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>4.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Summary_Variables.a4TotalUnitCost</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>20.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Set_Non_Triggered_Rules_0_0_0</targetReference>
+            </connector>
+            <label>R4NotTriggered</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Which_Level_Are_We_Evaluating</name>
+        <label>Which Level Are We Evaluating</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Loop1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Level 1 Rules</defaultConnectorLabel>
+        <rules>
+            <name>Level_4_Rules</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Levels_Loop</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>4.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelectLevelz</targetReference>
+                <targetReference>Loop4</targetReference>
             </connector>
-            <label>Rule 4</label>
+            <label>Level 4 Rules</label>
         </rules>
         <rules>
-            <name>Rule_5</name>
+            <name>Level_3_Rules</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
+                <leftValueReference>Levels_Loop</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>5.0</numberValue>
+                    <numberValue>3.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Select_Levela</targetReference>
+                <targetReference>Loop3</targetReference>
             </connector>
-            <label>Rule 5</label>
+            <label>Level 3 Rules</label>
         </rules>
         <rules>
-            <name>Rule_6</name>
+            <name>Level_2_Rules</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Rule_Loop.Order__c</leftValueReference>
+                <leftValueReference>Levels_Loop</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>6.0</numberValue>
+                    <numberValue>2.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelectLevelb</targetReference>
+                <targetReference>Loop2</targetReference>
             </connector>
-            <label>Rule 6</label>
+            <label>Level 2 Rules</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -1100,18 +1169,60 @@
         <collectionReference>LevelsList</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Approval_Rules</targetReference>
+            <targetReference>Filter_Rules</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Live_Approval_Update</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>Rule_Loop</name>
-        <label>Rule Loop</label>
+        <name>Loop1</name>
+        <label>Loop1</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <collectionReference>Approval_Rules</collectionReference>
+        <collectionReference>Filter_Rules</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Reset_Triggering_0_0_0</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Levels_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop2</name>
+        <label>Loop2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Filter_Rules</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Reset_Triggering_0_0</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Levels_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop3</name>
+        <label>Loop3</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Filter_Rules</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Reset_Triggering_0</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Levels_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop4</name>
+        <label>Loop4</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Filter_Rules</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Reset_Triggering</targetReference>
@@ -1146,7 +1257,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Rule_Loop</targetReference>
+            <targetReference>Levels_List</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1154,13 +1265,6 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Level__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Levels_Loop</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -1218,7 +1322,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Levels_List</targetReference>
+            <targetReference>Approval_Rules</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1269,6 +1373,182 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Approver_Locator</name>
+        <label>Approver Locator</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Add_to_Live_List</targetReference>
+        </connector>
+        <flowName>RCA_Approver_Locator</flowName>
+        <inputAssignments>
+            <name>approvalRule</name>
+            <value>
+                <elementReference>Loop4</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerManagerRecord</name>
+            <value>
+                <elementReference>ManagerManager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerRecord</name>
+            <value>
+                <elementReference>Manager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ruleTriggered</name>
+            <value>
+                <elementReference>ruleTriggered</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>UsersList</name>
+            <value>
+                <elementReference>Users</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>approvalLive</assignToReference>
+            <name>approvalLive</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Approver_Locator_0</name>
+        <label>Approver Locator</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Add_to_Live_List_0</targetReference>
+        </connector>
+        <flowName>RCA_Approver_Locator</flowName>
+        <inputAssignments>
+            <name>approvalRule</name>
+            <value>
+                <elementReference>Loop3</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerManagerRecord</name>
+            <value>
+                <elementReference>ManagerManager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerRecord</name>
+            <value>
+                <elementReference>Manager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ruleTriggered</name>
+            <value>
+                <elementReference>ruleTriggered</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>UsersList</name>
+            <value>
+                <elementReference>Users</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>approvalLive</assignToReference>
+            <name>approvalLive</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Approver_Locator_0_0</name>
+        <label>Approver Locator</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Add_to_Live_List_0_0</targetReference>
+        </connector>
+        <flowName>RCA_Approver_Locator</flowName>
+        <inputAssignments>
+            <name>approvalRule</name>
+            <value>
+                <elementReference>Loop2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerManagerRecord</name>
+            <value>
+                <elementReference>ManagerManager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerRecord</name>
+            <value>
+                <elementReference>Manager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ruleTriggered</name>
+            <value>
+                <elementReference>ruleTriggered</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>UsersList</name>
+            <value>
+                <elementReference>Users</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>approvalLive</assignToReference>
+            <name>approvalLive</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Approver_Locator_0_0_0</name>
+        <label>Approver Locator</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Add_to_Live_List_0_0_0</targetReference>
+        </connector>
+        <flowName>RCA_Approver_Locator</flowName>
+        <inputAssignments>
+            <name>approvalRule</name>
+            <value>
+                <elementReference>Loop1</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerManagerRecord</name>
+            <value>
+                <elementReference>ManagerManager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>managerRecord</name>
+            <value>
+                <elementReference>Manager</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ruleTriggered</name>
+            <value>
+                <elementReference>ruleTriggered</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>UsersList</name>
+            <value>
+                <elementReference>Users</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>approvalLive</assignToReference>
+            <name>approvalLive</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Summary_Variables</name>
         <label>Summary Variables</label>
         <locationX>0</locationX>
@@ -1307,6 +1587,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>currentItem_Filter_Rules</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RCA_Approval_Rule__c</objectType>
     </variables>
     <variables>
         <name>LevelsList</name>

@@ -170,7 +170,7 @@
             <targetReference>Quote_Details</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>a1QuoteDiscount</name>
         <dataType>Number</dataType>
