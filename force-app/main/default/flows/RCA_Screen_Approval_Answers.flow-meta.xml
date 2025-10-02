@@ -58,7 +58,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Kick_Off_Approval_Background_Flow</targetReference>
+                <targetReference>RCA_Approval_Rule_Eval_Invocable</targetReference>
             </connector>
             <label>No Records We can Skip to the End</label>
         </rules>
@@ -126,7 +126,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Kick_Off_Approval_Background_Flow</targetReference>
+            <targetReference>RCA_Approval_Rule_Eval_Invocable</targetReference>
         </connector>
         <inputReference>AnswersCollection</inputReference>
     </recordUpdates>
@@ -265,14 +265,14 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Kick_Off_Approval_Background_Flow</name>
-        <label>Kick Off Approval Background Flow</label>
+        <name>RCA_Approval_Rule_Eval_Invocable</name>
+        <label>RCA Approval Rule Eval Invocable</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Update_Quote_to_Pending_Approval</targetReference>
         </connector>
-        <flowName>RCA_Approval_Rule_Evaluation_Flow</flowName>
+        <flowName>RCA_Approval_Rule_Evaluation_Invocable</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
