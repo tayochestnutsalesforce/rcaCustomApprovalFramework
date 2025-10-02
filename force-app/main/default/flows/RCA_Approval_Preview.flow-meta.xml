@@ -91,19 +91,19 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Evaluate_Quote</targetReference>
+            <targetReference>Evaluate_Quote_Approvals</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
-        <name>Evaluate_Quote</name>
-        <label>Evaluate Quote</label>
+        <name>Evaluate_Quote_Approvals</name>
+        <label>Evaluate Quote Approvals</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Preview_Screen</targetReference>
         </connector>
-        <flowName>RCA_Approval_Rule_Evaluation_Flow</flowName>
+        <flowName>RCA_Approval_Rule_Evaluation_Invocable</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
