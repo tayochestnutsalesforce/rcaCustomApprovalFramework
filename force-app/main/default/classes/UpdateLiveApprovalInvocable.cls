@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 09-24-2025
+ * @last modified on  : 10-01-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class UpdateLiveApprovalInvocable {
@@ -14,6 +14,9 @@ public with sharing class UpdateLiveApprovalInvocable {
 
         @InvocableVariable(label='Quote Id' description='Quote Id to target')
         public String quoteId;
+
+        @InvocableVariable(label='Level' description='Level to target')
+        public String level;
 
         public Requests() {}
     }
@@ -28,6 +31,7 @@ public with sharing class UpdateLiveApprovalInvocable {
     Map<Id, List<ApprovalRecordsWrapper>> approvalsByQuote = new Map<Id, List<ApprovalRecordsWrapper>>();
     Set<Id> quoteIds = new Set<Id>();
     Set<String> ruleIds = new Set<String>();
+    Set<String> levels = new Set<String>();
 
         for (Requests rg : requestGroups) {
             if (rg == null) continue;
@@ -38,6 +42,9 @@ public with sharing class UpdateLiveApprovalInvocable {
                 if (qId == null) continue;
 
             quoteIds.add(qId);
+            if (rg.level != null) {
+                levels.add(rg.level);
+            }
             if (!approvalsByQuote.containsKey(qId)) approvalsByQuote.put(qId, new List<ApprovalRecordsWrapper>());
             if (rg.approvals != null) {
                 approvalsByQuote.get(qId).addAll(rg.approvals);
@@ -58,7 +65,7 @@ public with sharing class UpdateLiveApprovalInvocable {
 
         whereClause = String.join(ors, ' OR ');
 
-    String soql = 'SELECT Id, Quote__c,' +
+    String soql = 'SELECT Id, Quote__c, Level__c,' +
             ' Approval_Rule_1__c, Approval_Rule_2__c, Approval_Rule_3__c, Approval_Rule_4__c, Approval_Rule_5__c,' +
             ' Approval_Rule_6__c, Approval_Rule_7__c, Approval_Rule_8__c, Approval_Rule_9__c, Approval_Rule_10__c,' +
             ' Approval_Rule_11__c, Approval_Rule_12__c, Approval_Rule_13__c, Approval_Rule_14__c, Approval_Rule_15__c,' +
@@ -76,6 +83,11 @@ public with sharing class UpdateLiveApprovalInvocable {
             ' Approver_11__c, Approver_12__c, Approver_13__c, Approver_14__c, Approver_15__c,' +
             ' Approver_16__c, Approver_17__c, Approver_18__c, Approver_19__c, Approver_20__c' +
             ' FROM Live_Approval__c WHERE (' + whereClause + ') AND Quote__c IN :quoteIds';
+    
+    // Add Level filter if levels are provided
+    if (!levels.isEmpty()) {
+        soql += ' AND Level__c IN :levels';
+    }
 
     List<Live_Approval__c> lives = Database.query(soql);
 

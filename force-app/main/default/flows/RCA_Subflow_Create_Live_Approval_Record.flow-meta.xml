@@ -7,11 +7,20 @@
         <locationY>0</locationY>
         <actionName>LiveApprovalCreator</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Clear_Id_List</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>approvalRuleIds</name>
             <value>
                 <elementReference>approvalIdList</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>level</name>
+            <value>
+                <elementReference>Levels_Loop</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -25,6 +34,56 @@
     </actionCalls>
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Clear_Id_List</name>
+        <label>Clear Id List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>approvalIdList</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Levels_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Levels_List</name>
+        <label>Levels List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>levels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>4.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>levels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>3.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>levels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>2.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>levels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Levels_Loop</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Approval_Id_List</name>
         <label>Set Approval Id List</label>
@@ -47,7 +106,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Get_Approval_Rules</targetReference>
+            <targetReference>Levels_List</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not a Test</defaultConnectorLabel>
         <rules>
@@ -81,6 +140,17 @@
     <environments>Default</environments>
     <interviewLabel>RCA Subflow Create Live Approval Record {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RCA Subflow Create Live Approval Record</label>
+    <loops>
+        <name>Levels_Loop</name>
+        <label>Levels Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>levels</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_Approval_Rules</targetReference>
+        </nextValueConnector>
+    </loops>
     <loops>
         <name>Rule_Loop</name>
         <label>Rule Loop</label>
@@ -131,9 +201,16 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Level__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Levels_Loop</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>RCA_Approval_Rule__c</object>
-        <sortField>Level__c</sortField>
+        <sortField>Order__c</sortField>
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -172,6 +249,14 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>levels</name>
+        <dataType>Number</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>recordId</name>

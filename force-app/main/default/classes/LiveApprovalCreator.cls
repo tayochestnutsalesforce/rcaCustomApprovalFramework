@@ -14,6 +14,9 @@ public with sharing class LiveApprovalCreator {
         @InvocableVariable(label='Quote Id' description='Quote Id to target')
         public String quoteId;
 
+        @InvocableVariable(label='Level' description='Level of the approval')
+        public Integer level;
+
         public Requests() {}
     }
 
@@ -28,6 +31,8 @@ public with sharing class LiveApprovalCreator {
             Id qId = null;
             try { qId = (Id)req.quoteId; } catch (Exception e) { qId = null; }
             if (qId == null) continue;
+            if (req == null || req.level == null) continue;
+            Integer level = req.level;
 
             // collect rule ids
             Set<Id> ruleIdSet = new Set<Id>();
@@ -45,6 +50,7 @@ public with sharing class LiveApprovalCreator {
 
             Live_Approval__c la = new Live_Approval__c();
             la.Quote__c = qId;
+            la.Level__c = level;
 
             Integer idx = 1;
             for (RCA_Approval_Rule__c rr : rules) {

@@ -247,6 +247,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Live_Approval__c.Level__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Live_Approval__c.Quote__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -463,6 +468,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>RCA_Approval_Rule__c.Chain__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RCA_Approval_Rule__c.Flow_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

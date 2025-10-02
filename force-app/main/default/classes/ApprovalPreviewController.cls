@@ -29,18 +29,19 @@ public with sharing class ApprovalPreviewController {
     }
 
     /**
-     * Flatten the Live_Approval__c record for a Quote into per-slot DTOs. Uses the
+     * Flatten the Live_Approval__c records for a Quote into per-slot DTOs. Uses the
      * Approver_N__c values from Live_Approval__c (not the Approver on the rule) and
      * only returns slots where the corresponding Triggered_N__c == true.
+     * Now supports multiple Live_Approval__c records (up to 4) with different Level__c values.
      */
     @AuraEnabled(cacheable=true)
     public static List<PreviewDTO> getFlattenedLiveApprovalForQuote(Id quoteId) {
         List<PreviewDTO> results = new List<PreviewDTO>();
         if (quoteId == null) return results;
 
-        // Query the single Live_Approval__c row for this quote and include all slot fields
+        // Query all Live_Approval__c records for this quote and include all slot fields
         List<Live_Approval__c> liveList = [
-            SELECT Id, Quote__c,
+            SELECT Id, Quote__c, Level__c,
                 Approval_Rule_1__c, Approval_Rule_2__c, Approval_Rule_3__c, Approval_Rule_4__c, Approval_Rule_5__c,
                 Approval_Rule_6__c, Approval_Rule_7__c, Approval_Rule_8__c, Approval_Rule_9__c, Approval_Rule_10__c,
                 Approval_Rule_11__c, Approval_Rule_12__c, Approval_Rule_13__c, Approval_Rule_14__c, Approval_Rule_15__c,
@@ -59,11 +60,32 @@ public with sharing class ApprovalPreviewController {
                 Triggered_16__c, Triggered_17__c, Triggered_18__c, Triggered_19__c, Triggered_20__c
             FROM Live_Approval__c
             WHERE Quote__c = :quoteId
-            LIMIT 1
+            ORDER BY Level__c ASC NULLS LAST
         ];
 
         if (liveList.isEmpty()) return results;
-        Live_Approval__c live = liveList[0];
+
+        System.debug('=== DEBUG: Found ' + liveList.size() + ' Live_Approval__c records for Quote: ' + quoteId);
+        for (Live_Approval__c live : liveList) {
+            System.debug('Live_Approval__c: Id=' + live.Id + ', Level=' + live.Level__c);
+        }
+
+        // Process each Live_Approval__c record
+        for (Live_Approval__c live : liveList) {
+            List<PreviewDTO> recordResults = processLiveApprovalRecord(live);
+            System.debug('=== DEBUG: Live_Approval__c ' + live.Id + ' (Level ' + live.Level__c + ') produced ' + recordResults.size() + ' preview items');
+            results.addAll(recordResults);
+        }
+        
+        // return results as-is; sorting/grouping is handled client-side
+        return results;
+    }
+
+    /**
+     * Helper method to process a single Live_Approval__c record and return DTOs
+     */
+    private static List<PreviewDTO> processLiveApprovalRecord(Live_Approval__c live) {
+        List<PreviewDTO> results = new List<PreviewDTO>();
 
         // Collect approval rule ids from slots and prepare per-slot arrays
         Id[] slotRuleIds = new Id[20];
@@ -161,6 +183,20 @@ public with sharing class ApprovalPreviewController {
             if (slotRuleIds[i] != null) ruleIds.add(slotRuleIds[i]);
         }
 
+        System.debug('=== DEBUG: Live_Approval__c ' + live.Id + ' has ' + ruleIds.size() + ' approval rules assigned');
+        
+        // Count triggered slots
+        Integer triggeredCount = 0;
+        for (Integer i = 0; i < 20; i++) {
+            if (slotRuleIds[i] != null && triggered[i] == true) {
+                triggeredCount++;
+                System.debug('=== DEBUG: Slot ' + (i+1) + ' - Rule: ' + slotRuleIds[i] + ', Triggered: ' + triggered[i] + ', Approver: ' + approverVals[i] + ', Status: ' + statuses[i]);
+            } else if (slotRuleIds[i] != null) {
+                System.debug('=== DEBUG: Slot ' + (i+1) + ' - Rule: ' + slotRuleIds[i] + ', Triggered: ' + triggered[i] + ' (NOT TRIGGERED)');
+            }
+        }
+        System.debug('=== DEBUG: Total triggered slots: ' + triggeredCount);
+
         // Query RCA rules in bulk
         Map<Id, RCA_Approval_Rule__c> ruleMap = new Map<Id, RCA_Approval_Rule__c>();
         if (!ruleIds.isEmpty()) {
@@ -168,14 +204,27 @@ public with sharing class ApprovalPreviewController {
                 ruleMap.put(r.Id, r);
             }
         }
+        
+        System.debug('=== DEBUG: Found ' + ruleMap.size() + ' approval rules in database out of ' + ruleIds.size() + ' requested');
 
         // Build DTOs per populated & triggered slot
+        Integer processedCount = 0;
         for (Integer i = 0; i < 20; i++) {
             Id rid = slotRuleIds[i];
             if (rid == null) continue;
-            // only include if the corresponding Triggered_N__c is true
-            if (triggered[i] == null || !triggered[i]) continue;
-            if (!ruleMap.containsKey(rid)) continue;
+            
+            // Check each condition that could cause a slot to be skipped
+            if (triggered[i] == null || !triggered[i]) {
+                System.debug('=== DEBUG: Skipping slot ' + (i+1) + ' - not triggered (triggered=' + triggered[i] + ')');
+                continue;
+            }
+            
+            if (!ruleMap.containsKey(rid)) {
+                System.debug('=== DEBUG: Skipping slot ' + (i+1) + ' - rule not found in database (ruleId=' + rid + ')');
+                continue;
+            }
+            
+            processedCount++;
             RCA_Approval_Rule__c rule = ruleMap.get(rid);
             PreviewDTO d = new PreviewDTO();
             d.Id = String.valueOf(rule.Id);
@@ -183,7 +232,8 @@ public with sharing class ApprovalPreviewController {
             d.ApprovalRuleSlot = i + 1;
             d.Chain = rule.Chain__c;
             d.Order = (rule.Order__c == null ? 0 : Integer.valueOf(rule.Order__c));
-            d.Level = (rule.Level__c == null ? 0 : Integer.valueOf(rule.Level__c));
+            // Use the Level from the Live_Approval__c record instead of the rule
+            d.Level = (live.Level__c == null ? 0 : Integer.valueOf(live.Level__c));
             d.Title = rule.Title__c;
             // Use the Approver value from the Live_Approval__c row instead of the rule's approver
             d.ApproverName = approverVals[i];
@@ -196,15 +246,15 @@ public with sharing class ApprovalPreviewController {
             d.LiveApprovalId = String.valueOf(live.Id);
             d.LiveQuoteId = (live.Quote__c == null ? null : String.valueOf(live.Quote__c));
 
-            system.debug('--- ApprovalPreviewController.getFlattenedLiveApprovalForQuote results ---');
+            system.debug('--- ApprovalPreviewController.processLiveApprovalRecord results ---');
             system.debug(d);
         
             results.add(d);
         }
         
-        // return results as-is; sorting/grouping is handled client-side
-        return results;
+        System.debug('=== DEBUG: processLiveApprovalRecord completed - processed ' + processedCount + ' slots, returning ' + results.size() + ' preview items');
         
+        return results;
     }
 
     /**

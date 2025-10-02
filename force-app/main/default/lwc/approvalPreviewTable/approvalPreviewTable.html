@@ -42,6 +42,7 @@
                                                         <div class="approver-info">
                                                             <div class="approver-name">{row.ApproverName}</div>
                                                             <div class="approver-title">{row.Title}</div>
+                                                            <div if:true={row.Status} class="approver-status">Status: {row.Status}</div>
                                                             <div class="approver-notes">{row.Notes}</div>
                                                         </div>
                                                     </div>

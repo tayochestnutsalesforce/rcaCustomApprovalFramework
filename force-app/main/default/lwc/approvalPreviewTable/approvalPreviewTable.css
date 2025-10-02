@@ -54,6 +54,7 @@
 }
 .approver-name { font-weight: 600; }
 .approver-title { font-size: 0.85rem; color: #4b5563; }
+.approver-status { font-size: 0.8rem; color: #059669; font-weight: 500; margin-top: 0.25rem; }
 .approver-notes { font-size: 0.8rem; color: #6b7280; }
 .loading { font-style: italic; }
 .error { color: red; }

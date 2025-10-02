@@ -30,6 +30,11 @@
         <default>false</default>
         <label>Pending</label>
     </customValue>
+    <customValue>
+        <fullName>Error</fullName>
+        <default>false</default>
+        <label>Error</label>
+    </customValue>
     <masterLabel>Live Approval Status</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

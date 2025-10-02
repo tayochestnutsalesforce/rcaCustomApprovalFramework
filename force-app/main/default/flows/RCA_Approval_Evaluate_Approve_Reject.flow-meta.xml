@@ -15,6 +15,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>level</name>
+            <value>
+                <elementReference>approvalRuleLevel</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>quoteId</name>
             <value>
                 <elementReference>recordId</elementReference>
@@ -154,6 +160,10 @@
             </value>
         </filters>
         <object>RCA_Approval_Rule__c</object>
+        <outputAssignments>
+            <assignToReference>approvalRuleLevel</assignToReference>
+            <field>Level__c</field>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>approvalRuleName</assignToReference>
             <field>Title__c</field>
@@ -405,6 +415,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>approvalRuleLevel</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
     </variables>
     <variables>
         <name>approvalRuleName</name>

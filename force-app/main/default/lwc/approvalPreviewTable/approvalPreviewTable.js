@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getApprovalPreviews from '@salesforce/apex/ApprovalPreviewController.getApprovalPreviews';
-import getApprovalPreviewsForQuote from '@salesforce/apex/ApprovalPreviewController.getApprovalPreviewsForQuote';
+import getFlattenedLiveApprovalForQuote from '@salesforce/apex/ApprovalPreviewController.getFlattenedLiveApprovalForQuote';
 
 export default class ApprovalPreviewTable extends LightningElement {
     @api flowData; // optional JSON string passed from Flow
@@ -44,9 +43,11 @@ export default class ApprovalPreviewTable extends LightningElement {
             }
             if (!raw) {
                 if (this.quoteId) {
-                    raw = await getApprovalPreviewsForQuote({ quoteId: this.quoteId });
+                    raw = await getFlattenedLiveApprovalForQuote({ quoteId: this.quoteId });
                 } else {
-                    raw = await getApprovalPreviews();
+                    // If no quoteId provided, we can't load data with the current controller
+                    this.error = 'Quote ID is required to load approval preview data';
+                    return;
                 }
             }
 
@@ -136,9 +137,11 @@ export default class ApprovalPreviewTable extends LightningElement {
                         Order: row.Order || '',
                         ApproverName: row.ApproverName || row.Approver || '',
                         Title: row.Title || row.Approver_Title || '',
-                        Status: row.Status || row.Approver_Status || '',
+                        Status: row.Status || '',
                         Notes: row.Notes || '',
-                        URL: row.URL || '' ,
+                        URL: row.URL || '',
+                        LiveApprovalId: row.LiveApprovalId || '',
+                        ApprovalRuleId: row.ApprovalRuleId || '',
                         _placeholder: !!row._placeholder,
                         // add a simple class name to bind in template (avoid ternary in template)
                         _rowClass: row._placeholder ? 'placeholder-row' : ''
