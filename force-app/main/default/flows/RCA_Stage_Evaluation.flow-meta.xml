@@ -29,6 +29,43 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Stage_List</name>
+        <label>Stage List</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>stageList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>stage1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>stageList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>stage2</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>stageList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>stage3</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>stageList</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>stage4</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Stages_and_Statuses</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Status_List</name>
         <label>Status List</label>
         <locationX>0</locationX>
@@ -62,7 +99,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_Stages</targetReference>
+            <targetReference>Stage_List</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -86,8 +123,10 @@
         </value>
     </constants>
     <decisions>
-        <name>Check_Stages</name>
-        <label>Check Stages</label>
+        <description>Stage Listing is for the Stage (Completed, NotStarted, InProgress)
+Status Listing is &quot;Approve, Reject&quot;</description>
+        <name>Check_Stages_and_Statuses</name>
+        <label>Check Stages and Statuses</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -95,7 +134,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Continue</defaultConnectorLabel>
         <rules>
-            <name>Contains_Reject</name>
+            <name>Hop_Out_for_Rejection</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>statusListing</leftValueReference>
@@ -107,13 +146,13 @@
             <connector>
                 <targetReference>Exit_Rejection_Found</targetReference>
             </connector>
-            <label>Contains Reject</label>
+            <label>Hop Out for Rejection</label>
         </rules>
         <rules>
             <name>Contains_In_Progress</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>statusListing</leftValueReference>
+                <leftValueReference>stageList</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>InProgress</stringValue>
@@ -125,26 +164,19 @@
             <label>Contains In Progress</label>
         </rules>
         <rules>
-            <name>Completed_with_no_Reject_or_InProgress</name>
+            <name>Not_Started_and_Completed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>statusListing</leftValueReference>
+                <leftValueReference>stageList</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>NotStarted</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>statusListing</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Approved</stringValue>
+                    <stringValue>Completed</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Exit_Finished_for_Success</targetReference>
             </connector>
-            <label>Completed with no Reject or InProgress</label>
+            <label>Not Started and Completed</label>
         </rules>
     </decisions>
     <environments>Default</environments>
@@ -190,6 +222,41 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>stage1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>stage2</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>stage3</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>stage4</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>stageList</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

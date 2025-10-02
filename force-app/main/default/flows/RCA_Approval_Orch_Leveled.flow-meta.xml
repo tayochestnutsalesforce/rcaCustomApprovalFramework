@@ -211,13 +211,13 @@
             <inputParameters>
                 <name>Status1</name>
                 <value>
-                    <elementReference>Approval_11.Status</elementReference>
+                    <elementReference>Approval_11.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>Status2</name>
                 <value>
-                    <elementReference>Approval_12.Status</elementReference>
+                    <elementReference>Approval_12.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -267,13 +267,13 @@
             <inputParameters>
                 <name>Status1</name>
                 <value>
-                    <elementReference>Approval_21.Status</elementReference>
+                    <elementReference>Approval_21.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>Status2</name>
                 <value>
-                    <elementReference>Approval_22.Status</elementReference>
+                    <elementReference>Approval_22.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -323,13 +323,13 @@
             <inputParameters>
                 <name>Status1</name>
                 <value>
-                    <elementReference>Approval_31.Status</elementReference>
+                    <elementReference>Approval_31.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>Status2</name>
                 <value>
-                    <elementReference>Approval_32.Status</elementReference>
+                    <elementReference>Approval_32.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -379,13 +379,13 @@
             <inputParameters>
                 <name>Status1</name>
                 <value>
-                    <elementReference>Approval_41.Status</elementReference>
+                    <elementReference>Approval_41.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>Status2</name>
                 <value>
-                    <elementReference>Approval_42.Status</elementReference>
+                    <elementReference>Approval_42.Outputs.approvalDecision</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -504,13 +504,13 @@
         <exitActionInputParameters>
             <name>Status1</name>
             <value>
-                <elementReference>Approval_11.Status</elementReference>
+                <elementReference>Approval_11.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
             <name>Status2</name>
             <value>
-                <elementReference>Approval_12.Status</elementReference>
+                <elementReference>Approval_12.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
@@ -523,6 +523,18 @@
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage1</name>
+            <value>
+                <elementReference>Approval_11.Status</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage2</name>
+            <value>
+                <elementReference>Approval_12.Status</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionName>RCA_Stage_Evaluation</exitActionName>
@@ -538,7 +550,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -582,6 +594,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 1-1</label>
             <outputConfigParams>
@@ -611,7 +626,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -655,6 +670,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 1-2</label>
             <outputConfigParams>
@@ -686,13 +704,13 @@
         <exitActionInputParameters>
             <name>Status1</name>
             <value>
-                <elementReference>Approval_21.Status</elementReference>
+                <elementReference>Approval_21.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
             <name>Status2</name>
             <value>
-                <elementReference>Approval_22.Status</elementReference>
+                <elementReference>Approval_22.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
@@ -705,6 +723,18 @@
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage1</name>
+            <value>
+                <elementReference>Approval_21.Status</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage2</name>
+            <value>
+                <elementReference>Approval_22.Status</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionName>RCA_Stage_Evaluation</exitActionName>
@@ -720,7 +750,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -764,6 +794,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 2-1</label>
             <outputConfigParams>
@@ -793,7 +826,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -837,6 +870,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 2-2</label>
             <outputConfigParams>
@@ -868,13 +904,13 @@
         <exitActionInputParameters>
             <name>Status1</name>
             <value>
-                <elementReference>Approval_31.Status</elementReference>
+                <elementReference>Approval_31.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
             <name>Status2</name>
             <value>
-                <elementReference>Approval_32.Status</elementReference>
+                <elementReference>Approval_32.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
@@ -887,6 +923,18 @@
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage1</name>
+            <value>
+                <elementReference>Approval_31.Status</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage2</name>
+            <value>
+                <elementReference>Approval_32.Status</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionName>RCA_Stage_Evaluation</exitActionName>
@@ -902,7 +950,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -946,6 +994,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 3-1</label>
             <outputConfigParams>
@@ -975,7 +1026,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -1019,6 +1070,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 3-2</label>
             <outputConfigParams>
@@ -1050,13 +1104,13 @@
         <exitActionInputParameters>
             <name>Status1</name>
             <value>
-                <elementReference>Approval_41.Status</elementReference>
+                <elementReference>Approval_41.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
             <name>Status2</name>
             <value>
-                <elementReference>Approval_42.Status</elementReference>
+                <elementReference>Approval_42.Outputs.approvalDecision</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionInputParameters>
@@ -1069,6 +1123,18 @@
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage1</name>
+            <value>
+                <elementReference>Approval_41.Status</elementReference>
+            </value>
+        </exitActionInputParameters>
+        <exitActionInputParameters>
+            <name>stage2</name>
+            <value>
+                <elementReference>Approval_42.Status</elementReference>
             </value>
         </exitActionInputParameters>
         <exitActionName>RCA_Stage_Evaluation</exitActionName>
@@ -1084,7 +1150,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -1128,6 +1194,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 4-1</label>
             <outputConfigParams>
@@ -1157,7 +1226,7 @@
                 </assignee>
                 <assigneeType>Resource</assigneeType>
             </assignees>
-            <canAssigneeEdit>true</canAssigneeEdit>
+            <canAssigneeEdit>false</canAssigneeEdit>
             <debugSimulateStep>false</debugSimulateStep>
             <entryConditionLogic>and</entryConditionLogic>
             <entryConditions>
@@ -1201,6 +1270,9 @@
             </inputParameters>
             <inputParameters>
                 <name>ActionInput__CanUseSmartApproval</name>
+                <value>
+                    <stringValue>true</stringValue>
+                </value>
             </inputParameters>
             <label>Approval 4-2</label>
             <outputConfigParams>
