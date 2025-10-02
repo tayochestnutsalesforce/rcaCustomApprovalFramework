@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 10-01-2025
+ * @last modified on  : 10-02-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class UpdateLiveApprovalInvocable {
@@ -16,7 +16,7 @@ public with sharing class UpdateLiveApprovalInvocable {
         public String quoteId;
 
         @InvocableVariable(label='Level' description='Level to target')
-        public String level;
+        public Integer level;
 
         public Requests() {}
     }
@@ -31,7 +31,7 @@ public with sharing class UpdateLiveApprovalInvocable {
     Map<Id, List<ApprovalRecordsWrapper>> approvalsByQuote = new Map<Id, List<ApprovalRecordsWrapper>>();
     Set<Id> quoteIds = new Set<Id>();
     Set<String> ruleIds = new Set<String>();
-    Set<String> levels = new Set<String>();
+    Set<Integer> levels = new Set<Integer>();
 
         for (Requests rg : requestGroups) {
             if (rg == null) continue;

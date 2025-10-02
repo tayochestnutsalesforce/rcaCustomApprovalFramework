@@ -138,6 +138,9 @@
             <conditions>
                 <leftValueReference>approvalRule.Approver_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>User</stringValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ruleTriggered</leftValueReference>
@@ -157,6 +160,9 @@
             <conditions>
                 <leftValueReference>approvalRule.Approver_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Manager</stringValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ruleTriggered</leftValueReference>
@@ -176,6 +182,9 @@
             <conditions>
                 <leftValueReference>approvalRule.Approver_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Group</stringValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ruleTriggered</leftValueReference>
@@ -195,6 +204,9 @@
             <conditions>
                 <leftValueReference>approvalRule.Approver_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ManagerManager</stringValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ruleTriggered</leftValueReference>
