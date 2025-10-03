@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_Level</name>
+        <label>Get Level</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Approval_Levels</actionName>
+        <actionType>runDecisionMatrix</actionType>
+        <connector>
+            <targetReference>Line_Loop</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>Type</name>
+            <value>
+                <stringValue>Discount Approval</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>isActive</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Level</name>
+            <value>
+                <elementReference>approvalRule.Level__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Family</name>
+            <value>
+                <stringValue>NA</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>Approval_Levels</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <description>Create Loops, Decisions, Variables etc as you would in a normal flow to Evaluate the Rule.  NOTE:  That when you evaluate different levels for a similar rule, use the level as a delineator.  Example Level 1 discount is 10 vs Level 2 Discount is 20, use the Level from the Approval Rule and both Rules should call the same Flow</description>
+        <name>Additional_Notes</name>
+        <label>Additional Notes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Level</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Trigger_the_Rule</name>
+        <label>Trigger the Rule</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>triggered</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>isSuccess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Is_Any_Line_Over_the_Approval_Level</name>
+        <label>Is Any Line Over the Approval Level</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Line_Loop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Skip</defaultConnectorLabel>
+        <rules>
+            <name>Meets_Approval_Threshold</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>frmCalculateDiscount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>Get_Level.Percentage</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Trigger_the_Rule</targetReference>
+            </connector>
+            <label>Meets Approval Threshold</label>
+        </rules>
+    </decisions>
+    <description>This Template is for adding new rules to your approval process.  As an input it has the following values:
+recordId (To query objects related to the quote)
+Quote
+QuoteLines
+Quote Line Groups
+Approval Rule(Which contains the level, chain, order)
+
+Output Variables are
+Triggered (Boolean)
+Error Message
+isSuccess(Boolean)
+
+Build additonal logic around this template and add the new flow you build to your approval Rule Object under the FlowName Field(API Name Only)</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>frmCalculateDiscount</name>
+        <dataType>Number</dataType>
+        <expression>(({!Line_Loop.UnitPrice}-{!Line_Loop.NetUnitPrice})/{!Line_Loop.UnitPrice}) * 100</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>RCA Sample Rule Evaluator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RCA Approval Discount Levels</label>
+    <loops>
+        <name>Line_Loop</name>
+        <label>Line Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>quoteLineItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Is_Any_Line_Over_the_Approval_Level</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <sourceTemplate>RCA_Sample_Rule_Evaluator</sourceTemplate>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Additional_Notes</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>approvalRule</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RCA_Approval_Rule__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>isSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>quoteLineGroups</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineGroup</objectType>
+    </variables>
+    <variables>
+        <name>quoteLineItems</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>quoteRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Quote</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sampleGroupVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sampleLineVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>triggered</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

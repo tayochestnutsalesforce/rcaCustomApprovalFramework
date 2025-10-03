@@ -1,0 +1,18 @@
+{
+  "status": 0,
+  "result": [
+    {
+      "createdById": "005SB00000NkPxRYAV",
+      "createdByName": "OrgFarm EPIC",
+      "createdDate": "2025-10-03T19:23:40.000Z",
+      "fileName": "decisionMatrixDefinition/Approval_Levels.decisionMatrixDefinition",
+      "fullName": "Approval_Levels",
+      "id": "9QNSB0000001N2b4AE",
+      "lastModifiedById": "005SB00000NkPxRYAV",
+      "lastModifiedByName": "OrgFarm EPIC",
+      "lastModifiedDate": "2025-10-03T19:23:40.000Z",
+      "manageableState": "unmanaged",
+      "type": "DecisionMatrixDefinition"
+    }
+  ]
+}

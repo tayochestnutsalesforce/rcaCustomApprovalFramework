@@ -1,0 +1,5 @@
+Type,isActive,Level,Family,Amount,Percentage,Count
+Discount Approval,true,3,NA,0,60,0
+Discount Approval,true,4,NA,0,75,0
+Discount Approval,true,2,NA,0,40,0
+Discount Approval,true,1,NA,0,20,0
