@@ -17,6 +17,15 @@ global class FlowInvokerApex {
         
         @InvocableVariable(label='Record Id' description='ID of the record being processed' required=true)
         global String recordId;
+        
+        @InvocableVariable(label='Quote Record' description='Quote record to pass to the Flow' required=false)
+        global Quote quoteRecord;
+        
+        @InvocableVariable(label='Quote Line Items' description='List of QuoteLineItem records to pass to the Flow' required=false)
+        global List<QuoteLineItem> quoteLineItems;
+        
+        @InvocableVariable(label='Quote Line Groups' description='List of QuoteLineGroup records to pass to the Flow' required=false)
+        global List<QuoteLineGroup> quoteLineGroups;
     }
     
     /**
@@ -67,7 +76,7 @@ global class FlowInvokerApex {
                 }
                 
                 // Execute the Flow dynamically
-                FlowResult flowResult = executeFlow(input.flowName, input.approvalRule, input.recordId);
+                FlowResult flowResult = executeFlow(input.flowName, input.approvalRule, input.recordId, input.quoteRecord, input.quoteLineItems, input.quoteLineGroups);
                 output.approvalRecordsWrapper = flowResult.approvalRecordsWrapper;
                 output.triggered = flowResult.triggered;
                 output.approver = flowResult.approver;
@@ -90,13 +99,29 @@ global class FlowInvokerApex {
      * @param flowName Name of the Flow to execute
      * @param approvalRule The approval rule record to pass to the Flow
      * @param recordId The record ID to pass to the Flow
+     * @param quoteRecord The Quote record to pass to the Flow
+     * @param quoteLineItems The list of QuoteLineItem records to pass to the Flow
+     * @param quoteLineGroups The list of QuoteLineGroup records to pass to the Flow
      * @return FlowResult containing all outputs from the Flow
      */
-    private static FlowResult executeFlow(String flowName, RCA_Approval_Rule__c approvalRule, String recordId) {
+    private static FlowResult executeFlow(String flowName, RCA_Approval_Rule__c approvalRule, String recordId, Quote quoteRecord, List<QuoteLineItem> quoteLineItems, List<QuoteLineGroup> quoteLineGroups) {
         // Prepare input variables for the Flow
         Map<String, Object> flowInputs = new Map<String, Object>();
         flowInputs.put('approvalRule', approvalRule);
         flowInputs.put('recordId', recordId);
+        
+        // Add the new optional inputs if they are provided
+        if (quoteRecord != null) {
+            flowInputs.put('quoteRecord', quoteRecord);
+        }
+        
+        if (quoteLineItems != null && !quoteLineItems.isEmpty()) {
+            flowInputs.put('quoteLineItems', quoteLineItems);
+        }
+        
+        if (quoteLineGroups != null && !quoteLineGroups.isEmpty()) {
+            flowInputs.put('quoteLineGroups', quoteLineGroups);
+        }
         
         // Create and start the Flow interview
         Flow.Interview flowInterview = Flow.Interview.createInterview(flowName, flowInputs);

@@ -3,11 +3,24 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <description>Passing Hard Coded Values For now</description>
-        <name>Here_is_where_you_Evaluate_Your_Rule</name>
-        <label>Here is where you Evaluate Your Rule</label>
-        <locationX>447</locationX>
-        <locationY>214</locationY>
+        <description>Create Loops, Decisions, Variables etc as you would in a normal flow to Evaluate the Rule.  NOTE:  That when you evaluate different levels for a similar rule, use the level as a delineator.  Example Level 1 discount is 10 vs Level 2 Discount is 20, use the Level from the Approval Rule and both Rules should call the same Flow</description>
+        <name>Additional_Notes</name>
+        <label>Additional Notes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Line_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Output_Variables</name>
+        <label>Output Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>isSuccess</assignToReference>
             <operator>Assign</operator>
@@ -23,20 +36,87 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>approver</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>epic.3d84eb37d117@orgfarm.out</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Set_Group_Variables</name>
+        <label>Set Group Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>sampleGroupVar</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Group_Loop.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Group_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Line_Variables</name>
+        <label>Set Line Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>sampleLineVar</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Line_Loop.CustomProductName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Line_Loop</targetReference>
+        </connector>
+    </assignments>
+    <description>This Template is for adding new rules to your approval process.  As an input it has the following values:
+recordId (To query objects related to the quote)
+Quote
+QuoteLines
+Quote Line Groups
+Approval Rule(Which contains the level, chain, order)
+
+Output Variables are
+Triggered (Boolean)
+Error Message
+isSuccess(Boolean)
+
+Build additonal logic around this template and add the new flow you build to your approval Rule Object under the FlowName Field(API Name Only)</description>
     <environments>Default</environments>
     <interviewLabel>RCA Sample Rule Evaluator {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
     <label>RCA Sample Rule Evaluator</label>
+    <loops>
+        <name>Group_Loop</name>
+        <label>Group Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>quoteLineGroups</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Group_Variables</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Output_Variables</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Line_Loop</name>
+        <label>Line Loop</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>quoteLineItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Line_Variables</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Group_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -46,7 +126,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -57,27 +137,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>425</locationX>
-        <locationY>48</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
-            <targetReference>Here_is_where_you_Evaluate_Your_Rule</targetReference>
+            <targetReference>Additional_Notes</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
-    <subflows>
-        <name>Approver_Locator</name>
-        <label>Approver Locator</label>
-        <locationX>552</locationX>
-        <locationY>312</locationY>
-        <flowName>RCA_Approver_Locator</flowName>
-        <inputAssignments>
-            <name>approvalRule</name>
-            <value>
-                <elementReference>approvalRule</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
+    <status>Active</status>
     <variables>
         <name>approvalRule</name>
         <dataType>SObject</dataType>
@@ -85,20 +151,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>RCA_Approval_Rule__c</objectType>
-    </variables>
-    <variables>
-        <name>approvalRuleId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>approver</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>errorMessage</name>
@@ -113,6 +165,51 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>quoteLineGroups</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineGroup</objectType>
+    </variables>
+    <variables>
+        <name>quoteLineItems</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>quoteRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Quote</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sampleGroupVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sampleLineVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>triggered</name>

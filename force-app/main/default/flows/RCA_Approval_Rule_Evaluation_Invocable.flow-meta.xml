@@ -24,6 +24,24 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>quoteLineGroups</name>
+            <value>
+                <elementReference>Quote_Line_Groups</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>quoteLineItems</name>
+            <value>
+                <elementReference>Quote_Line_Items</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>quoteRecord</name>
+            <value>
+                <elementReference>Get_Quote</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>recordId</name>
             <value>
                 <elementReference>recordId</elementReference>
@@ -564,6 +582,48 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Quote_Line_Groups</name>
+        <label>Quote Line Groups</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Users</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QuoteId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>QuoteLineGroup</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Quote_Line_Items</name>
+        <label>Quote Line Items</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Quote_Line_Groups</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>QuoteId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>QuoteLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Users</name>
         <label>Users</label>
         <locationX>0</locationX>
@@ -598,7 +658,7 @@
             <targetReference>Get_Quote</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Approver_Locator</name>
         <label>Approver Locator</label>
@@ -646,7 +706,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Users</targetReference>
+            <targetReference>Quote_Line_Items</targetReference>
         </connector>
         <flowName>RCA_Summary_Variable_Flow</flowName>
         <inputAssignments>
