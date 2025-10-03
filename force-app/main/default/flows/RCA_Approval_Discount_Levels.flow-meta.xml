@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Line_Loop</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_Error_Message</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>Type</name>
@@ -54,6 +57,33 @@
         <connector>
             <targetReference>Get_Level</targetReference>
         </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Error_Message</name>
+        <label>Set Error Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>triggered</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>isSuccess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Trigger_the_Rule</name>
@@ -165,7 +195,7 @@ Build additonal logic around this template and add the new flow you build to you
         <name>approvalRule</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>RCA_Approval_Rule__c</objectType>
     </variables>
