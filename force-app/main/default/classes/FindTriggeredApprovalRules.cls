@@ -100,18 +100,22 @@ public with sharing class FindTriggeredApprovalRules {
 
             // Iterate approval rule fields, extract index and inspect corresponding triggered/status field
             for (String arField : approvalRuleFields) {
-                // Extract the numeric index from field name like "Approval_Rule_10__c"
-                // Find the position after the last underscore before "__c"
-                Integer start = arField.lastIndexOf('_') + 1;
-                Integer ending = arField.indexOf('__c');
+                // Remove __c suffix to work with cleaner field name
+                String tempField = arField.replace('__c', '');
+                System.debug('Processing field: ' + arField + ', temp field: ' + tempField);
                 
-                // Validate the positions to ensure proper extraction
-                if (start <= 0 || ending <= start) {
-                    System.debug('Invalid field format: ' + arField + ', start: ' + start + ', ending: ' + ending);
+                // Extract the numeric index from field name like "Approval_Rule_10"
+                // Find the position after the last underscore
+                Integer start = tempField.lastIndexOf('_') + 1;
+                
+                // Validate the position to ensure proper extraction
+                if (start <= 0 || start >= tempField.length()) {
+                    System.debug('Invalid field format: ' + arField + ', start: ' + start + ', tempField length: ' + tempField.length());
                     continue;
                 }
                 
-                String idx = arField.substring(start, ending);
+                String idx = tempField.substring(start);
+                System.debug('Extracted index: "' + idx + '" from field: ' + arField);
                 
                 // Validate that idx is numeric
                 if (!idx.isNumeric()) {
