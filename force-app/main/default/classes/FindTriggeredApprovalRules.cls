@@ -45,14 +45,24 @@ public with sharing class FindTriggeredApprovalRules {
         Set<String> triggeredFields = new Set<String>();
 
         // Precompile regex patterns (Apex Pattern/Matcher usage)
-        Pattern pApproval = Pattern.compile('(?i)Approval_Rule_\\d+__c');
-        Pattern pTriggered = Pattern.compile('(?i)Triggered_\\d+__c');
-        Pattern pStatus = Pattern.compile('(?i)Status_\\d+__c');
+        // Updated patterns to be more specific and handle edge cases
+        Pattern pApproval = Pattern.compile('(?i)^Approval_Rule_\\d+__c$');
+        Pattern pTriggered = Pattern.compile('(?i)^Triggered_\\d+__c$');
+        Pattern pStatus = Pattern.compile('(?i)^Status_\\d+__c$');
 
         for (String fn : fldMap.keySet()) {
-            if (pApproval.matcher(fn).matches()) approvalRuleFields.add(fn);
-            if (pTriggered.matcher(fn).matches()) triggeredFields.add(fn);
-            if (pStatus.matcher(fn).matches()) triggeredFields.add(fn);
+            if (pApproval.matcher(fn).matches()) {
+                approvalRuleFields.add(fn);
+                System.debug('Found approval rule field: ' + fn);
+            }
+            if (pTriggered.matcher(fn).matches()) {
+                triggeredFields.add(fn);
+                System.debug('Found triggered field: ' + fn);
+            }
+            if (pStatus.matcher(fn).matches()) {
+                triggeredFields.add(fn);
+                System.debug('Found status field: ' + fn);
+            }
         }
 
         // Always include Quote__c and Id
@@ -61,6 +71,10 @@ public with sharing class FindTriggeredApprovalRules {
         selectSet.addAll(triggeredFields);
 
         String soql = 'SELECT ' + String.join(new List<String>(selectSet), ',') + ' FROM Live_Approval__c WHERE Quote__c IN :quoteIds';
+        System.debug('SOQL Query: ' + soql);
+        System.debug('Approval Rule Fields found: ' + approvalRuleFields);
+        System.debug('Triggered/Status Fields found: ' + triggeredFields);
+        
         List<SObject> liveApprovals = Database.query(soql);
 
         // Map quoteId -> Live_Approval__c
@@ -86,16 +100,50 @@ public with sharing class FindTriggeredApprovalRules {
 
             // Iterate approval rule fields, extract index and inspect corresponding triggered/status field
             for (String arField : approvalRuleFields) {
+                // Extract the numeric index from field name like "Approval_Rule_10__c"
+                // Find the position after the last underscore before "__c"
                 Integer start = arField.lastIndexOf('_') + 1;
-                Integer endding = arField.indexOf('__c');
-                if (start <= 0 || endding <= start) continue;
-                String idx = arField.substring(start, endding);
+                Integer ending = arField.indexOf('__c');
+                
+                // Validate the positions to ensure proper extraction
+                if (start <= 0 || ending <= start) {
+                    System.debug('Invalid field format: ' + arField + ', start: ' + start + ', ending: ' + ending);
+                    continue;
+                }
+                
+                String idx = arField.substring(start, ending);
+                
+                // Validate that idx is numeric
+                if (!idx.isNumeric()) {
+                    System.debug('Non-numeric index extracted: ' + idx + ' from field: ' + arField);
+                    continue;
+                }
+                
                 String trigF = 'Triggered_' + idx + '__c';
                 String statusF = 'Status_' + idx + '__c';
 
                 Object trigVal = null;
-                if (fldMap.containsKey(trigF)) trigVal = la.get(trigF);
-                else if (fldMap.containsKey(statusF)) trigVal = la.get(statusF);
+                String usedField = null;
+                
+                // Check if the corresponding triggered or status field exists and get its value
+                if (fldMap.containsKey(trigF)) {
+                    try {
+                        trigVal = la.get(trigF);
+                        usedField = trigF;
+                    } catch (Exception e) {
+                        System.debug('Error accessing field ' + trigF + ': ' + e.getMessage());
+                    }
+                } else if (fldMap.containsKey(statusF)) {
+                    try {
+                        trigVal = la.get(statusF);
+                        usedField = statusF;
+                    } catch (Exception e) {
+                        System.debug('Error accessing field ' + statusF + ': ' + e.getMessage());
+                    }
+                } else {
+                    System.debug('Neither ' + trigF + ' nor ' + statusF + ' exists in the field map');
+                    continue;
+                }
 
                 Boolean isTriggered = false;
                 if (trigVal instanceof Boolean) {
@@ -107,7 +155,14 @@ public with sharing class FindTriggeredApprovalRules {
 
                 if (isTriggered) {
                     Object arVal = la.get(arField);
-                    if (arVal != null) resp.approvalRuleIds.add(String.valueOf(arVal));
+                    if (arVal != null) {
+                        resp.approvalRuleIds.add(String.valueOf(arVal));
+                        System.debug('Added approval rule ID: ' + String.valueOf(arVal) + ' from field: ' + arField + ' (triggered by: ' + usedField + ' = ' + trigVal + ')');
+                    } else {
+                        System.debug('Approval rule field ' + arField + ' was null despite being triggered by ' + usedField);
+                    }
+                } else {
+                    System.debug('Field ' + arField + ' not triggered. ' + usedField + ' = ' + trigVal);
                 }
             }
 
