@@ -10,6 +10,9 @@ public with sharing class FindTriggeredApprovalRules {
     public class Request {
         @InvocableVariable(required=true)
         public String quoteId;
+        
+        @InvocableVariable(required=false)
+        public Integer totalLevels;
     }
 
     public class Response {
@@ -17,7 +20,7 @@ public with sharing class FindTriggeredApprovalRules {
         public List<String> approvalRuleIds;
     }
 
-    @InvocableMethod(label='Find Triggered Approval Rules' description='Given a Quote Id returns Approval_Rule_x__c values when the corresponding Triggered_x__c (or Status_x__c) indicates a trigger')
+    @InvocableMethod(label='Find Triggered Approval Rules' description='Given a Quote Id and optional total number of levels, returns Approval_Rule_x__c values when the corresponding Triggered_x__c (or Status_x__c) indicates a trigger')
     public static List<Response> find(List<Request> requests) {
         List<Response> outputs = new List<Response>();
         if (requests == null || requests.isEmpty()) return outputs;
@@ -65,8 +68,8 @@ public with sharing class FindTriggeredApprovalRules {
             }
         }
 
-        // Always include Quote__c and Id
-        Set<String> selectSet = new Set<String>{'Id','Quote__c'};
+        // Always include Quote__c, Level__c and Id
+        Set<String> selectSet = new Set<String>{'Id','Quote__c','Level__c'};
         selectSet.addAll(approvalRuleFields);
         selectSet.addAll(triggeredFields);
 
@@ -77,11 +80,16 @@ public with sharing class FindTriggeredApprovalRules {
         
         List<SObject> liveApprovals = Database.query(soql);
 
-        // Map quoteId -> Live_Approval__c
-        Map<Id,SObject> byQuote = new Map<Id,SObject>();
+        // Map quoteId + level -> Live_Approval__c to handle multiple records per quote
+        Map<String,SObject> byQuoteAndLevel = new Map<String,SObject>();
         for (SObject la : liveApprovals) {
             Object q = la.get('Quote__c');
-            if (q instanceof Id) byQuote.put((Id)q, la);
+            Object lvl = la.get('Level__c');
+            if (q instanceof Id) {
+                String key = String.valueOf(q) + '_' + (lvl != null ? String.valueOf(lvl) : 'null');
+                byQuoteAndLevel.put(key, la);
+                System.debug('Mapped Live_Approval record: Quote=' + q + ', Level=' + lvl + ', Key=' + key);
+            }
         }
 
         // For each request, compute matched approval rule ids
@@ -95,8 +103,41 @@ public with sharing class FindTriggeredApprovalRules {
             Id qid;
             try { qid = (Id)r.quoteId; } catch (Exception e) { outputs.add(resp); continue; }
 
-            SObject la = byQuote.get(qid);
-            if (la == null) { outputs.add(resp); continue; }
+            // Determine which Live_Approval records to process
+            List<SObject> recordsToProcess = new List<SObject>();
+            
+            if (r.totalLevels != null && r.totalLevels > 0) {
+                // Process levels 1 through totalLevels
+                for (Integer currentLevel = 1; currentLevel <= r.totalLevels; currentLevel++) {
+                    String key = String.valueOf(qid) + '_' + String.valueOf(currentLevel);
+                    SObject la = byQuoteAndLevel.get(key);
+                    if (la != null) {
+                        recordsToProcess.add(la);
+                        System.debug('Added level ' + currentLevel + ' for processing (quote ' + qid + ')');
+                    } else {
+                        System.debug('No Live_Approval record found for quote ' + qid + ' level ' + currentLevel);
+                    }
+                }
+                System.debug('Processing levels 1 through ' + r.totalLevels + ' for quote ' + qid + ', found ' + recordsToProcess.size() + ' records');
+            } else {
+                // Process all levels for this quote (when totalLevels is null or 0)
+                for (String key : byQuoteAndLevel.keySet()) {
+                    if (key.startsWith(String.valueOf(qid) + '_')) {
+                        recordsToProcess.add(byQuoteAndLevel.get(key));
+                    }
+                }
+                System.debug('Processing all levels for quote ' + qid + ', found ' + recordsToProcess.size() + ' records');
+            }
+            
+            if (recordsToProcess.isEmpty()) { 
+                outputs.add(resp); 
+                continue; 
+            }
+
+            // Process each Live_Approval record
+            for (SObject la : recordsToProcess) {
+                Object currentLevel = la.get('Level__c');
+                System.debug('Processing Live_Approval record for quote ' + qid + ', level: ' + currentLevel);
 
             // Iterate approval rule fields, extract index and inspect corresponding triggered/status field
             for (String arField : approvalRuleFields) {
@@ -169,6 +210,7 @@ public with sharing class FindTriggeredApprovalRules {
                     System.debug('Field ' + arField + ' not triggered. ' + usedField + ' = ' + trigVal);
                 }
             }
+            } // End of processing for this Live_Approval record
 
             outputs.add(resp);
         }

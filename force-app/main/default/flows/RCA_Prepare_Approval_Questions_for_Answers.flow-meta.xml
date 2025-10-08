@@ -17,6 +17,12 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>totalLevels</name>
+            <value>
+                <numberValue>4.0</numberValue>
+            </value>
+        </inputParameters>
         <nameSegment>FindTriggeredApprovalRules</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -261,7 +267,7 @@
             <targetReference>Get_Approval_Rule_Ids</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>approvalAnswerList</name>
         <dataType>SObject</dataType>
