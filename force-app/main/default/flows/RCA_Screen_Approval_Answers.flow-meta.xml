@@ -58,7 +58,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>RCA_Approval_Rule_Eval_Invocable</targetReference>
+                <targetReference>Update_Quote_to_Pending_Approval</targetReference>
             </connector>
             <label>No Records We can Skip to the End</label>
         </rules>
@@ -126,7 +126,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>RCA_Approval_Rule_Eval_Invocable</targetReference>
+            <targetReference>Update_Quote_to_Pending_Approval</targetReference>
         </connector>
         <inputReference>AnswersCollection</inputReference>
     </recordUpdates>
@@ -260,17 +260,17 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Answer_Records</targetReference>
+            <targetReference>Approval_Main_Flow</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
-        <name>RCA_Approval_Rule_Eval_Invocable</name>
-        <label>RCA Approval Rule Eval Invocable</label>
+        <name>Approval_Main_Flow</name>
+        <label>Approval Main Flow</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Quote_to_Pending_Approval</targetReference>
+            <targetReference>Prepare_Questions_Answers</targetReference>
         </connector>
         <flowName>RCA_Approval_Rule_Evaluation_Invocable</flowName>
         <inputAssignments>
@@ -280,6 +280,19 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Prepare_Questions_Answers</name>
+        <label>Prepare Questions/Answers</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Answer_Records</targetReference>
+        </connector>
+        <flowName>RCA_Prepare_Approval_Questions_for_Answers</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+        </inputAssignments>
     </subflows>
     <variables>
         <name>AnswersCollection</name>
